@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "pandaTube",
+    "slug": "pandaTube",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
