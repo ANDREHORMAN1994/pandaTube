@@ -1,0 +1,24 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "standard-with-typescript",
+    "plugin:react/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-native"],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "react/style-prop-object": "off",
+    "@typescript-eslint/no-use-before-define": "off"
+  }
+}
