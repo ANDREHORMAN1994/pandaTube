@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert } from 'react-native';
 import { VStack, Image, Center, Text, Heading, ScrollView } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
-import { type AuthRoutesNavidationProps } from '@routes/auth.routes';
+import { type AuthRoutesNavigationProps } from '@routes/auth.routes';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import Input from '@components/Input';
@@ -14,10 +14,10 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  const navigation = useNavigation<AuthRoutesNavidationProps>();
+  const navigation = useNavigation<AuthRoutesNavigationProps>();
 
   const redirect = () => {
-    navigation.navigate('signIn');
+    navigation.goBack();
   };
 
   const validationFields = () => {
@@ -35,6 +35,7 @@ function SignUp() {
       <VStack flex={1}>
         <Image
           source={BackgroundImg}
+          defaultSource={BackgroundImg}
           alt="Fundo do cinema"
           resizeMode="contain"
           position="absolute"

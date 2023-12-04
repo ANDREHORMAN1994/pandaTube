@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { VStack, Image, Center, Text, Heading, Pressable, Icon, ScrollView } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
-import { type AuthRoutesNavidationProps } from '@routes/auth.routes';
+import { type AuthRoutesNavigationProps } from '@routes/auth.routes';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import Input from '@components/Input';
@@ -16,7 +16,7 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
-  const navigation = useNavigation<AuthRoutesNavidationProps>();
+  const navigation = useNavigation<AuthRoutesNavigationProps>();
 
   const redirect = () => {
     navigation.navigate('signUp');
@@ -37,6 +37,7 @@ function SignIn() {
       <VStack flex={1}>
         <Image
           source={BackgroundImg}
+          defaultSource={BackgroundImg}
           alt="Fundo do cinema"
           resizeMode="contain"
           position="absolute"
