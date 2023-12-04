@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { VStack, Image, Center, Text, Heading, ScrollView } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { type AuthRoutesNavidationProps } from '@routes/auth.routes';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import Input from '@components/Input';
@@ -11,6 +13,12 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+
+  const navigation = useNavigation<AuthRoutesNavidationProps>();
+
+  const redirect = () => {
+    navigation.navigate('signIn');
+  };
 
   const validationFields = () => {
     if (!name || !email || !password || !newPassword) {
@@ -24,7 +32,7 @@ function SignUp() {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-      <VStack flex={1} bg="gray.700">
+      <VStack flex={1}>
         <Image
           source={BackgroundImg}
           alt="Fundo do cinema"
@@ -74,7 +82,7 @@ function SignUp() {
           <Button name="Criar e acessar" onPress={validationFields} />
         </Center>
         <Center w="80%" mx="auto" mt={16}>
-          <Button name="Voltar para o login" variant="outline" />
+          <Button name="Voltar para o login" variant="outline" onPress={redirect} />
         </Center>
       </VStack>
     </ScrollView>

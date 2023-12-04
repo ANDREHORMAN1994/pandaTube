@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { VStack, Image, Center, Text, Heading, Pressable, Icon, ScrollView } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { type AuthRoutesNavidationProps } from '@routes/auth.routes';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import Input from '@components/Input';
@@ -14,19 +16,25 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
+  const navigation = useNavigation<AuthRoutesNavidationProps>();
+
+  const redirect = () => {
+    navigation.navigate('signUp');
+  };
+
   const validationFields = () => {
     const emailRegex = /^[a-z0-9.\-_]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
     const valEmail = emailRegex.test(email);
     const valPassword = password.length >= 6;
 
     setDisabled(!(valEmail && valPassword));
-  }
+  };
 
   useEffect(validationFields, [email, password]);
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-      <VStack flex={1} bg="gray.700">
+      <VStack flex={1}>
         <Image
           source={BackgroundImg}
           alt="Fundo do cinema"
@@ -78,7 +86,7 @@ function SignIn() {
           <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
             Ainda não tem acesso?
           </Text>
-          <Button name="Criar conta" variant="outline" />
+          <Button name="Criar conta" variant="outline" onPress={redirect} />
         </Center>
       </VStack>
     </ScrollView>
