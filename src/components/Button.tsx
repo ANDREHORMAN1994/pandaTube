@@ -6,7 +6,7 @@ type Props = IButtonProps & {
   disabled?: boolean;
 };
 
-function Button({ name, variant = 'solid', disabled = true, ...rest }: Props) {
+function Button({ name, variant = 'solid', disabled = false, ...rest }: Props) {
 
   if (disabled && variant === 'solid') {
     return (

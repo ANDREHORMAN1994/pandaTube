@@ -56,7 +56,6 @@ function SignIn() {
           <Input
             type={showPassword ? 'text' : 'password'}
             placeholder="Senha"
-            keyboardType="default"
             onChangeText={(text) => setPassword(text.trim())}
             value={password}
             InputLeftElement={
