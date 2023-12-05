@@ -1,12 +1,15 @@
-import { Button as NativeBaseButton, type IButtonProps, Text } from 'native-base';
+import { Button as NativeBaseButton, type IButtonProps, Text, HStack } from 'native-base';
+import { type ReactElement } from 'react';
+import { type Svg } from 'react-native-svg';
 
 type Props = IButtonProps & {
   name: string;
   variant?: 'solid' | 'outline';
   disabled?: boolean;
+  icon?: ReactElement<typeof Svg> | null;
 };
 
-function Button({ name, variant = 'solid', disabled = false, ...rest }: Props) {
+function Button({ name, variant = 'solid', disabled = false, icon = null, ...rest }: Props) {
 
   if (disabled && variant === 'solid') {
     return (
@@ -41,9 +44,12 @@ function Button({ name, variant = 'solid', disabled = false, ...rest }: Props) {
       }}
       {...rest}
     >
-      <Text color={variant === 'outline' ? 'green.700' : '#FFF'} fontFamily="heading" fontSize="sm">
-        {name}
-      </Text>
+      <HStack justifyContent="center" alignItems="center">
+        <Text color={variant === 'outline' ? 'green.700' : '#FFF'} fontFamily="heading" fontSize="sm" mr={icon ? 2 : 0}>
+          {name}
+        </Text>
+        {icon && icon}
+      </HStack>
     </NativeBaseButton>
   );
 }

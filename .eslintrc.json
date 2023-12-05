@@ -27,6 +27,8 @@
     "react/require-default-props": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "prefer-destructuring": "off",
-    "react/no-unstable-nested-components": "off"
+    "react/no-unstable-nested-components": "off",
+    "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/unbound-method": "off"
   }
 }

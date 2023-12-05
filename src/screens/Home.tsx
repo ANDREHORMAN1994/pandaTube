@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react';
+import { HStack, VStack, FlatList, Heading, Text } from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { type AppRoutesNavigationProps } from '@routes/app.routes';
 import GroupCategories from '@components/GroupCategories';
 import HomeHeader from '@components/HomeHeader';
 import Loading from '@components/Loading';
 import VideoCard from '@components/VideoCard';
-import { HStack, VStack, FlatList, Heading, Text } from 'native-base';
-import { useEffect, useState } from 'react';
 
 type Movie = {
   id: number;
@@ -25,6 +27,12 @@ function Home() {
   const [categories, setCategories] = useState<string[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [movies, setMovies] = useState<Movie[]>([]);
+
+  const navigation = useNavigation<AppRoutesNavigationProps>();
+
+  const redirect = () => {
+    navigation.navigate('details');
+  }
 
   useEffect(() => {
     setCategories(CATEGORIES_LIST);
@@ -74,6 +82,7 @@ function Home() {
               name={name}
               description={description}
               uri={uri}
+              onPress={redirect}
             />
           )}
           showsVerticalScrollIndicator={false}
