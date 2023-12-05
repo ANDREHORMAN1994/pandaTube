@@ -10,7 +10,6 @@ import VideoWeb from '@components/VideoWeb';
 
 function Details() {
   const [isVideoReady, setIsVideoReady] = useState(false);
-  console.log(isVideoReady);
 
   const navigation = useNavigation<AppRoutesNavigationProps>();
 
