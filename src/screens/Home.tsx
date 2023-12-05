@@ -18,6 +18,7 @@ const MOVIES_LIST = [
   { id: 1, name: 'Debi & Loide', description: '1994 ‧ Comédia ‧ 1h 53m', uri: 'https://github.com/ANDREHORMAN1994.png' },
   { id: 2, name: 'Yu Yu Hakusho', description: '1992 ‧ Anime ‧ 112 episódios', uri: 'https://github.com/ANDREHORMAN1994.png' },
   { id: 3, name: 'A Maldição da Chorona', description: '2019 ‧ Terror ‧ 1h 34m', uri: 'https://github.com/ANDREHORMAN1994.png' },
+  { id: 4, name: 'Chapolin', description: '2019 ‧ Terror ‧ 1h 34m', uri: 'https://github.com/ANDREHORMAN1994.png' },
 ];
 
 function Home() {
