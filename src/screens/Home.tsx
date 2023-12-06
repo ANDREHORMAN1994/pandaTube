@@ -63,7 +63,7 @@ function Home() {
       </HStack>
       <VStack px={8}>
         <HStack mb={5}>
-          <Heading flex={1} color="gray.100" fontSize="xl">
+          <Heading flex={1} color="gray.100" fontSize="xl" fontFamily="heading">
             Vídeos
           </Heading>
           <Text color="green.500" fontSize="xl">

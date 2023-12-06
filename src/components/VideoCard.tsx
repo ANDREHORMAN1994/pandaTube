@@ -29,7 +29,7 @@ function VideoCard({ name, description, uri, ...rest }: Props) {
           resizeMode="cover"
         />
         <VStack flex={1}>
-          <Heading color="gray.100" fontSize="lg">{name}</Heading>
+          <Heading fontFamily="heading" color="gray.100" fontSize="lg">{name}</Heading>
           <Text color="gray.200" numberOfLines={2}>{description}</Text>
         </VStack>
         <Icon

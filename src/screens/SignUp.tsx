@@ -1,33 +1,62 @@
-import { useState } from 'react';
-import { Alert } from 'react-native';
 import { VStack, Image, Center, Text, Heading, ScrollView } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
+import { useForm, Controller } from 'react-hook-form';
 import { type AuthRoutesNavigationProps } from '@routes/auth.routes';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup'
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-function SignUp() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+type FormProps = {
+  name: string;
+  email: string;
+  password: string;
+  newPassword: string;
+};
 
+const schema = yup.object({
+  name: yup.string()
+    .required('Campo obrigatório! Informe o seu nome'),
+  email: yup.string()
+    .required('Campo obrigatório! Informe o seu e-mail')
+    .email('E-mail inválido'),
+  password: yup.string()
+    .required('Campo obrigatório! Informe a sua senha')
+    .min(6, 'A senha deve ter no mínimo 6 caracteres'),
+  newPassword: yup.string()
+    .required('Campo obrigatório! Confirme a sua senha')
+    .min(6, 'A senha deve ter no mínimo 6 caracteres')
+    .oneOf([yup.ref('password'), ''], 'As senhas não são iguais'),
+});
+
+function SignUp() {
   const navigation = useNavigation<AuthRoutesNavigationProps>();
+  const { control, handleSubmit, formState: { errors, isValid } } = useForm<FormProps>({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      newPassword: '',
+    },
+    resolver: yupResolver(schema),
+  });
+
 
   const redirect = () => {
     navigation.goBack();
   };
 
-  const validationFields = () => {
-    if (!name || !email || !password || !newPassword) {
-      return Alert.alert('Preencha todos os campos');
-    }
-    if (password !== newPassword) {
-      return Alert.alert('As senhas não são iguais');
-    }
-    return Alert.alert('Cadastro realizado com sucesso');
+  const validationFields = (data: FormProps) => {
+    console.log(data);
+    // if (!name || !email || !password || !newPassword) {
+    //   return Alert.alert('Preencha todos os campos');
+    // }
+    // if (password !== newPassword) {
+    //   return Alert.alert('As senhas não são iguais');
+    // }
+    // return Alert.alert('Cadastro realizado com sucesso');
   }
 
   return (
@@ -51,36 +80,70 @@ function SignUp() {
             Crie sua conta
           </Heading>
 
-          <Input
-            type="text"
-            placeholder="Nome"
-            onChangeText={(text) => setName(text.trim())}
-            value={name}
+          <Controller
+            control={control}
+            name="name"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                type="text"
+                placeholder="Nome"
+                onChangeText={onChange}
+                value={value}
+                messageError={errors.name?.message}
+              />
+            )}
           />
-          <Input
-            type="text"
-            placeholder="E-mail"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            onChangeText={(text) => setEmail(text.trim())}
-            value={email}
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                type="text"
+                placeholder="E-mail"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                onChangeText={onChange}
+                value={value}
+                messageError={errors.email?.message}
+              />
+            )}
           />
-          <Input
-            type="password"
-            placeholder="Senha"
-            onChangeText={(text) => setPassword(text.trim())}
-            value={password}
-            secureTextEntry
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                type="password"
+                placeholder="Senha"
+                onChangeText={onChange}
+                value={value}
+                secureTextEntry
+                messageError={errors.password?.message}
+              />
+            )}
           />
-          <Input
-            type="password"
-            placeholder="Confirme a senha"
-            onChangeText={(text) => setNewPassword(text.trim())}
-            value={newPassword}
-            secureTextEntry
+          <Controller
+            control={control}
+            name="newPassword"
+            render={({ field: { onChange, value } }) => (
+              <Input
+                type="password"
+                placeholder="Confirme a senha"
+                onChangeText={onChange}
+                value={value}
+                messageError={errors.newPassword?.message}
+                secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={handleSubmit(validationFields)}
+              />
+            )}
           />
 
-          <Button name="Criar e acessar" onPress={validationFields} />
+          <Button
+            name="Criar e acessar"
+            onPress={handleSubmit(validationFields)}
+            disabled={!isValid}
+          />
         </Center>
         <Center w="80%" mx="auto" mt={16}>
           <Button name="Voltar para o login" variant="outline" onPress={redirect} />

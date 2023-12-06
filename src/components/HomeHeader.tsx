@@ -15,7 +15,7 @@ function HomeHeader() {
         <Text color="gray.100" fontSize="md">
           Olá,
         </Text>
-        <Heading color="gray.100" fontSize="md">
+        <Heading fontFamily="heading" color="gray.100" fontSize="md">
           André Horman
         </Heading>
       </VStack>

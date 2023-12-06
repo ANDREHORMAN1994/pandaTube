@@ -25,7 +25,7 @@ function Details() {
           <Icon as={Feather} name="arrow-left" color="green.500" size={6} />
         </TouchableOpacity>
         <HStack alignItems="center">
-          <Heading flex={1} flexShrink={1} color="gray.100" fontSize="lg" mt={3} mb={5}>
+          <Heading  fontFamily="heading" flex={1} flexShrink={1} color="gray.100" fontSize="lg" mt={3} mb={5}>
             Rambo IV
           </Heading>
           <HStack alignItems="center">

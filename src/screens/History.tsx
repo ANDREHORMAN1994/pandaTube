@@ -70,7 +70,7 @@ function History() {
             />
           )}
           renderSectionHeader={({ section: { title } }) => (
-            <Heading color="gray.200" fontSize="lg" my={5}>
+            <Heading color="gray.200" fontSize="lg" fontFamily="heading" my={5}>
               {title}
             </Heading>
           )}

@@ -90,7 +90,7 @@ function Profile() {
         </Center>
 
         <VStack px={10} mt={12} mb={9}>
-          <Heading fontSize="md" color="gray.200" mb={2}>
+          <Heading fontSize="md" fontFamily="heading" color="gray.200" mb={2}>
             Alterar senha
           </Heading>
           <Input placeholder="Senha antiga" bg="gray.600" secureTextEntry />

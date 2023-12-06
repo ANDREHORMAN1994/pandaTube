@@ -21,6 +21,7 @@ function HistoryCard({ name, description, hour }: Props) {
         <Heading
           color="gray.100"
           fontSize="lg"
+          fontFamily="heading"
           textTransform="capitalize"
         >
           {name}
