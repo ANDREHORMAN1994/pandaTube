@@ -16,8 +16,8 @@ function HistoryCard({ name, description, hour }: Props) {
       rounded="md"
       alignItems="center"
     >
-      <VStack>
-        <Text color="gray.200" numberOfLines={1}>{description}</Text>
+      <VStack flex={1}>
+        <Text color="gray.200" mr={2} numberOfLines={1}>{description}</Text>
         <Heading
           color="gray.100"
           fontSize="lg"

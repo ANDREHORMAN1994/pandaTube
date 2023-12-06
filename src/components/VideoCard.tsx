@@ -26,7 +26,7 @@ function VideoCard({ name, description, uri, ...rest }: Props) {
           rounded="md"
           mr={4}
           alt="Imagem do vídeo"
-          resizeMode="center"
+          resizeMode="cover"
         />
         <VStack flex={1}>
           <Heading color="gray.100" fontSize="lg">{name}</Heading>

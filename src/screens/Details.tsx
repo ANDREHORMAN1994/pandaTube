@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { HStack, Heading, Icon, Text, VStack, Skeleton } from 'native-base';
+import { HStack, Heading, Icon, Text, VStack } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { type AppRoutesNavigationProps } from '@routes/app.routes';
 import MovieSvg from '@assets/movie.svg';
 import VideoWeb from '@components/VideoWeb';
+import Loading from '@components/Loading';
 
 function Details() {
   const [isVideoReady, setIsVideoReady] = useState(false);
@@ -18,7 +19,7 @@ function Details() {
   };
 
   return (
-    <VStack>
+    <VStack flex={1}>
       <VStack px={8} bg="gray.600" pt={12} w="full">
         <TouchableOpacity onPress={redirect}>
           <Icon as={Feather} name="arrow-left" color="green.500" size={6} />
@@ -36,20 +37,14 @@ function Details() {
         </HStack>
       </VStack>
 
-      <VStack m={8} position="relative" h="container">
+      <VStack flex={1} m={8} position="relative" h="full">
         {!isVideoReady && (
-          <Skeleton
-            w="full"
-            h={220}
-            startColor="gray.600"
-            endColor="gray.400"
-            position="absolute"
-            top={0}
-            left={0}
-            rounded="sm"
-          />
+          <Loading />
         )}
-        <VideoWeb setIsVideoReady={setIsVideoReady} />
+        <VideoWeb
+          isVideoReady={isVideoReady}
+          setIsVideoReady={setIsVideoReady}
+        />
       </VStack>
     </VStack>
   );
