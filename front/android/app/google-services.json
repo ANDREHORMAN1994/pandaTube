@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1068094407067",
+    "project_id": "pandatube-d15ba",
+    "storage_bucket": "pandatube-d15ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068094407067:android:04469f39f0f46a379b613e",
+        "android_client_info": {
+          "package_name": "com.pandatube"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3TL8z5FEXdj0AblEg7KjOANg919HXxLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
