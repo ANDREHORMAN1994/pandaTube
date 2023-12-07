@@ -1,27 +1,33 @@
-import { ControllerFunction } from '../types';
+import { ControllerFunction } from '../../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerCreateProduct = (controller: ControllerFunction) => {
+const swaggerCreateVideo = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/product'
+    #swagger.path = '/video'
     #swagger.method = 'post'
-    #swagger.tags = ['Products']
-    #swagger.description = 'Criar um novo produto com os dados fornecidos no corpo da requisição.'
+    #swagger.tags = ['Videos']
+    #swagger.description = 'Criar um novo vídeo com os dados fornecidos no corpo da requisição.'
   */
 
   /*
-    #swagger.parameters['New Product'] = {
+    #swagger.parameters['New Video'] = {
       in: 'body',
-      description: 'Informações para criar um novo produto.',
+      description: 'Informações para criar um novo vídeo.',
       required: true,
       type: 'object',
       schema: {
-        title: 'Apple iPhone 13',
-        price: 4449,
-        thumbnail: 'http://http2.mlstatic.com/D_916682-MLA47782359266_102021-I.jpg',
-        description: 'Smartphone de alto desempenho e bastante elegante.'
+        infos: {
+          name: 'Top Gang 2',
+          categorie: 'comédia',
+          sinopse: 'Filme de comédia muito engraçado.',
+          description: '1993 ‧ Comédia/Ação ‧ 1h 26m',
+        }
+        img: {
+          type: 'string',
+          format: 'binary',
+        },
       }
     }
   */
@@ -34,8 +40,8 @@ const swaggerCreateProduct = (controller: ControllerFunction) => {
 
   /*
     #swagger.responses[201] = {
-      description: 'Produto criado com sucesso.',
-      schema: { $ref: '#/definitions/Product' }
+      description: 'Vídeo criado com sucesso.',
+      schema: { $ref: '#/definitions/Video' }
     }
   */
 
@@ -63,7 +69,7 @@ const swaggerCreateProduct = (controller: ControllerFunction) => {
   /*
     #swagger.responses[500] = {
       description: 'Internal Server Error.',
-      schema: { message: 'Erro interno ao tentar criar um produto.' }
+      schema: { message: 'Erro interno ao tentar criar um vídeo.' }
     }
   */
 
@@ -71,4 +77,4 @@ const swaggerCreateProduct = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerCreateProduct;
+export default swaggerCreateVideo;

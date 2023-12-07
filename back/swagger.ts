@@ -6,12 +6,12 @@ dotenv.config();
 
 const URL = process.env.BASE_URL || 'http://localhost:3001';
 const OUTPUTFILE = './swagger_output.json';
-const ENDPOINTSFILES = ['./src/docs/*.ts'];
+const ENDPOINTSFILES = ['./src/docs/*.ts', './src/docs/videos/*.ts', './src/docs/users/*.ts'];
 
 const DOC = {
   info: {
     version: '1.0.0',
-    title: 'Challenge Allu API',
+    title: 'PandaTube API',
     description: 'Documentação da minha API',
   },
   host: URL.split('//')[1],
@@ -25,8 +25,8 @@ const DOC = {
       description: 'Endpoints relacionados aos usuários',
     },
     {
-      name: 'Products',
-      description: 'Endpoints relacionados aos produtos',
+      name: 'Videos',
+      description: 'Endpoints relacionados aos videos',
     },
   ],
   securityDefinitions: {
@@ -44,13 +44,12 @@ const DOC = {
       $email: 'andre@gmail.com',
       $password: '123456',
     },
-    Product: {
+    Video: {
       _id: 'abc123',
-      $title: 'Apple iPhone 13',
-      $price: 4449,
-      $thumbnail:
-        'http://http2.mlstatic.com/D_916682-MLA47782359266_102021-I.jpg',
-      $description: 'Smartphone de alto desempenho e bastante elegante.',
+      $name: 'Top Gang 2',
+      $categorie: 'comédia',
+      $sinopse: 'Filme de comédia muito engraçado.',
+      $description: '1993 ‧ Comédia/Ação ‧ 1h 26m',
       createdAt: '2021-06-21T18:30:09.000Z',
       updatedAt: '2021-06-21T18:30:09.000Z',
     },

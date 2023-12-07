@@ -1,27 +1,26 @@
-import { ControllerFunction } from '../types';
+import { ControllerFunction } from '../../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerUpdateProductById = (controller: ControllerFunction) => {
+const swaggerUpdateUserById = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/product/{id}'
+    #swagger.path = '/users/{id}'
     #swagger.method = 'patch'
-    #swagger.tags = ['Products']
-    #swagger.description = 'Retornar um produto atualizado com o ID especificado.'
+    #swagger.tags = ['Users']
+    #swagger.description = 'Retornar um usuário atualizado com o ID especificado.'
   */
 
   /*
     #swagger.parameters['New Infos'] = {
       in: 'body',
-      description: 'Novas informações relacionadas ao produto.',
+      description: 'Novas informações do usuário.',
       required: true,
       type: 'object',
       schema: {
-        title: 'Apple iPhone 8',
-        price: 1334,
-        thumbnail: 'http://http2.mlstatic.com/D_773138-MLA43694099481_102020-I.jpg',
-        description: 'Smartphone de alto desempenho e bastante elegante.',
+        name: 'Fulano',
+        email: 'fulano@gmail.com',
+        password: '654321'
       }
     }
   */
@@ -34,8 +33,8 @@ const swaggerUpdateProductById = (controller: ControllerFunction) => {
 
   /*
     #swagger.responses[200] = {
-      description: 'Produto atualizado com sucesso.',
-      schema: { $ref: '#/definitions/Product' }
+      description: 'Usuário atualizado com sucesso.',
+      schema: { $ref: '#/definitions/User' }
     }
   */
 
@@ -70,7 +69,21 @@ const swaggerUpdateProductById = (controller: ControllerFunction) => {
   /*
     #swagger.responses[404] = {
       description: 'Not Found.',
-      schema: { message: 'Nenhum produto cadastrado com esse ID.' }
+      schema: { message: 'Nenhum usuário cadastrado com esse ID.' }
+    }
+  */
+
+  /*
+    #swagger.responses[500-1] = {
+      description: 'Internal Server Error.',
+      schema: { message: 'Erro interno ao tentar atualizar o usuário.' }
+    }
+  */
+
+  /*
+    #swagger.responses[500-2] = {
+      description: 'Internal Server Error.',
+      schema: { message: 'Erro ao tentar criar o hash da senha.' }
     }
   */
 
@@ -78,4 +91,4 @@ const swaggerUpdateProductById = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerUpdateProductById;
+export default swaggerUpdateUserById;

@@ -1,14 +1,14 @@
-import { ControllerFunction } from '../types';
+import { ControllerFunction } from '../../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerGetProducts = (controller: ControllerFunction) => {
+const swaggerDownloadVideo = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/products'
+    #swagger.path = '/videos/download/{id}'
     #swagger.method = 'get'
-    #swagger.tags = ['Products']
-    #swagger.description = 'Retornar um array de objetos com todos os produtos cadastrados.'
+    #swagger.tags = ['Videos']
+    #swagger.description = 'Realiza o Download do vídeo com o id passado como parâmetro.'
   */
 
   /*
@@ -19,8 +19,8 @@ const swaggerGetProducts = (controller: ControllerFunction) => {
 
   /*
     #swagger.responses[200] = {
-      description: 'Produtos retornados com sucesso.',
-      schema: [{ $ref: '#/definitions/Product' }]
+      description: 'Download concluído com sucesso',
+      schema: { message: 'Download concluído com sucesso' }]
     }
   */
 
@@ -41,7 +41,7 @@ const swaggerGetProducts = (controller: ControllerFunction) => {
   /*
     #swagger.responses[500] = {
       description: 'Internal Server Error.',
-      schema: { message: 'Erro interno ao tentar acessar todos os produtos.' }
+      schema: { message: 'Erro interno ao tentar acessar todos os vídeos.' }
     }
   */
 
@@ -49,4 +49,4 @@ const swaggerGetProducts = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerGetProducts;
+export default swaggerDownloadVideo;

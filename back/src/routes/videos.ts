@@ -2,10 +2,12 @@ import { Router } from 'express';
 import middleware from '../middleware';
 import controllers from '../controllers';
 import upload from '../utils/multer';
-// import swaggerCreateVideo from '../docs/swaggerCreateVideo';
-// import swaggerGetvideos from '../docs/swaggerGetvideos';
-// import swaggerUpdateVideoById from '../docs/swaggerUpdateVideoById';
-// import swaggerDeleteVideoById from '../docs/swaggerDeleteVideoById';
+import swaggerCreateVideo from '../docs/videos/swaggerCreateVideo';
+import swaggerGetVideos from '../docs/videos/swaggerGetVideos';
+import swaggerDownloadVideo from '../docs/videos/swaggerDownloadVideo';
+import swaggerThumbVideo from '../docs/videos/swaggerThumbVideo';
+import swaggerUpdateVideoById from '../docs/videos/swaggerUpdateVideoById';
+import swaggerDeleteVideoById from '../docs/videos/swaggerDeleteVideoById';
 
 const videosRoutes = Router();
 
@@ -13,26 +15,22 @@ videosRoutes.post(
   '/video',
   upload.single('img'),
   middleware.valInfoVideo,
-  controllers.createVideo,
-  // swaggerCreateVideo(controllers.createVideo),
+  swaggerCreateVideo(controllers.createVideo),
 );
 
 videosRoutes.get(
   '/videos',
-  controllers.getAllVideos,
-  // swaggerGetvideos(controllers.getAllVideos),
+  swaggerGetVideos(controllers.getAllVideos),
 );
 
 videosRoutes.get(
   '/videos/download/:id',
-  controllers.downloadVideo,
-  // swaggerGetvideos(controllers.getAllVideos),
+  swaggerDownloadVideo(controllers.downloadVideo),
 );
 
 videosRoutes.get(
   '/videos/img/:name',
-  controllers.getImageByName,
-  // swaggerGetvideos(controllers.getAllVideos),
+  swaggerThumbVideo(controllers.getImageByName),
 );
 
 videosRoutes.patch(
@@ -40,15 +38,13 @@ videosRoutes.patch(
   upload.single('img'),
   middleware.valId,
   middleware.valInfoVideo,
-  controllers.updateVideo,
-  // swaggerUpdateVideoById(controllers.updateVideo),
+  swaggerUpdateVideoById(controllers.updateVideo),
 );
 
 videosRoutes.delete(
   '/video/:id',
   middleware.valId,
-  controllers.deleteVideo,
-  // swaggerDeleteVideoById(controllers.deleteVideo),
+  swaggerDeleteVideoById(controllers.deleteVideo),
 );
 
 export default videosRoutes;

@@ -1,4 +1,4 @@
-import { ControllerFunction } from '../types';
+import { ControllerFunction } from '../../types';
 
 /* eslint-disable arrow-body-style */
 const swaggerGetUserById = (controller: ControllerFunction) => {

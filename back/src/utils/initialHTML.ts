@@ -11,7 +11,7 @@ const html = `
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Challenge Allu 📱</title>
+  <title>PandaTube 🎥</title>
   <style>
     * {
       text-align: center;
@@ -27,14 +27,14 @@ const html = `
     }
 
     body {
-      background-color: #181622;
+      background-color: #121214;
       color: #FFFFFF;
       height: 100vh;
     }
 
     .title-container {
-      background-color: #1E253E;
-      border-bottom: 1px solid #1976D2;
+      background-color: #00875F;
+      border-bottom: 1px solid #00B37E;
       padding: 50px;
       font-size: 2rem;
     }
@@ -45,11 +45,11 @@ const html = `
     }
 
     .message-card {
-      background-color: #1E253E;
+      background-color: #29292E;
       max-width: max-content;
       margin: auto;
       padding: 80px;
-      border: 1px solid #1976D2;
+      border: 1px solid #00B37E;
       border-radius: 10px;
       width: 700px;
     }
@@ -62,19 +62,19 @@ const html = `
     }
 
     a {
-      color: #1976D2;
+      color: #00B37E;
     }
   </style>
 </head>
 
 <body>
-  <h1 class="title-container">Bem vindo a minha API 📱</h1>
+  <h1 class="title-container">Bem vindo a API do PandaTube 🎥</h1>
   <section class="message-container">
     <section class="message-card">
       <p class="message-card-text">
-        Essa <strong>API</strong> oferece recursos para o cadastro de usuários e o gerenciamento completo de produtos cadastrados.
+        Essa <strong>API</strong> oferece recursos para o cadastro de vídeos no panda video e o gerenciamento completo dos usuários cadastrados.
         
-        Com ela, é possível realizar um <strong>CRUD</strong> completo, sendo capaz de criar, visualizar, editar e remover cada produto cadastrado.
+        Com ela, é possível realizar um <strong>CRUD</strong> completo, sendo capaz de criar, visualizar, editar e remover cada vídeo cadastrado.
       </p>
       <h2 class="message-card-link">Acesse a rota
         <strong>

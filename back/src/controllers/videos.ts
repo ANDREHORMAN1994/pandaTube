@@ -7,10 +7,12 @@ import HandleError from '../utils/HandleError';
 import { IVideo, RequestWithToken } from '../types';
 import {
   downloadPandaVideoFile,
+  getMediaByPath,
   getPandaVideoFile,
 } from '../utils/pandaVideoFunctions';
 
 const DIR_FILE = path.join(__dirname, '../../tmp/img');
+const DIR_FILE_VIDEO = path.join(__dirname, '../../tmp/videos');
 
 export const createVideo = async (
   req: RequestWithToken,
@@ -43,7 +45,14 @@ export const downloadVideo = async (
   try {
     const { id } = req.params;
 
+    const videoExists = await getMediaByPath(DIR_FILE_VIDEO, id);
+    if (videoExists) {
+      console.log('Vídeo já foi baixado anteriormente.');
+      return res.status(200).json({ message: 'Vídeo já baixado anteriormente' });
+    }
+
     const data = await getPandaVideoFile();
+    console.log('data', data);
     if (!data || (data && !data.videos.length)) {
       throw new Error('Nenhum video encontrado');
     }

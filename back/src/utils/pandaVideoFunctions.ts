@@ -26,7 +26,7 @@ export const downloadPandaVideoFile = async (videoId: string) => {
       fs.mkdirSync(DIR_FILE);
     }
 
-    content.data
+    return content.data
       .pipe(fs.createWriteStream(`${DIR_FILE}/${videoId}.mp4`))
       .on('finish', () => true);
   } catch (e) {
@@ -67,4 +67,20 @@ export const getAllPandaVideos = async () => {
     .catch((error) => {
       console.error(error);
     });
+};
+
+export const getMediaByPath = (directory: string, startOfName: string) => {
+  const files = fs.readdirSync(directory);
+
+  if (!files || files.length === 0) {
+    return false;
+  }
+
+  const file = files.find((f) => f.startsWith(startOfName));
+
+  if (!file) {
+    return false;
+  }
+
+  return true;
 };

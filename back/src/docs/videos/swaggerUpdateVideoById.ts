@@ -1,26 +1,33 @@
-import { ControllerFunction } from '../types';
+import { ControllerFunction } from '../../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerUpdateUserById = (controller: ControllerFunction) => {
+const swaggerUpdateVideoById = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/users/{id}'
+    #swagger.path = '/video/{id}'
     #swagger.method = 'patch'
-    #swagger.tags = ['Users']
-    #swagger.description = 'Retornar um usuário atualizado com o ID especificado.'
+    #swagger.tags = ['Videos']
+    #swagger.description = 'Retornar um vídeo atualizado com o ID especificado.'
   */
 
   /*
-    #swagger.parameters['New Infos'] = {
+    #swagger.parameters['New Video'] = {
       in: 'body',
-      description: 'Novas informações do usuário.',
+      description: 'Novas informações relacionadas ao vídeo.',
       required: true,
       type: 'object',
       schema: {
-        name: 'Fulano',
-        email: 'fulano@gmail.com',
-        password: '654321'
+        infos: {
+          name: 'Top Gang 2',
+          categorie: 'comédia',
+          sinopse: 'Filme de comédia muito engraçado.',
+          description: '1993 ‧ Comédia/Ação ‧ 1h 26m',
+        }
+        img: {
+          type: 'string',
+          format: 'binary',
+        },
       }
     }
   */
@@ -33,8 +40,8 @@ const swaggerUpdateUserById = (controller: ControllerFunction) => {
 
   /*
     #swagger.responses[200] = {
-      description: 'Usuário atualizado com sucesso.',
-      schema: { $ref: '#/definitions/User' }
+      description: 'Vídeo atualizado com sucesso.',
+      schema: { $ref: '#/definitions/Video' }
     }
   */
 
@@ -69,21 +76,7 @@ const swaggerUpdateUserById = (controller: ControllerFunction) => {
   /*
     #swagger.responses[404] = {
       description: 'Not Found.',
-      schema: { message: 'Nenhum usuário cadastrado com esse ID.' }
-    }
-  */
-
-  /*
-    #swagger.responses[500-1] = {
-      description: 'Internal Server Error.',
-      schema: { message: 'Erro interno ao tentar atualizar o usuário.' }
-    }
-  */
-
-  /*
-    #swagger.responses[500-2] = {
-      description: 'Internal Server Error.',
-      schema: { message: 'Erro ao tentar criar o hash da senha.' }
+      schema: { message: 'Nenhum vídeo cadastrado com esse ID.' }
     }
   */
 
@@ -91,4 +84,4 @@ const swaggerUpdateUserById = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerUpdateUserById;
+export default swaggerUpdateVideoById;

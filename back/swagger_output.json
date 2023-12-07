@@ -2,10 +2,10 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Challenge Allu API",
+    "title": "PandaTube API",
     "description": "Documentação da minha API"
   },
-  "host": "localhost:8080",
+  "host": "localhost:3001",
   "basePath": "/",
   "tags": [
     {
@@ -13,8 +13,8 @@
       "description": "Endpoints relacionados aos usuários"
     },
     {
-      "name": "Products",
-      "description": "Endpoints relacionados aos produtos"
+      "name": "Videos",
+      "description": "Endpoints relacionados aos videos"
     }
   ],
   "schemes": [
@@ -35,46 +35,17 @@
     "application/json"
   ],
   "paths": {
-    "/product": {
+    "/video": {
       "post": {
         "tags": [
-          "Products"
+          "Videos"
         ],
-        "description": "Criar um novo produto com os dados fornecidos no corpo da requisição.",
-        "parameters": [
-          {
-            "name": "New Product",
-            "in": "body",
-            "description": "Informações para criar um novo produto.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Apple iPhone 13"
-                },
-                "price": {
-                  "type": "number",
-                  "example": 4449
-                },
-                "thumbnail": {
-                  "type": "string",
-                  "example": "http://http2.mlstatic.com/D_916682-MLA47782359266_102021-I.jpg"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Smartphone de alto desempenho e bastante elegante."
-                }
-              }
-            }
-          }
-        ],
+        "description": "Criar um novo vídeo com os dados fornecidos no corpo da requisição.",
         "responses": {
           "201": {
-            "description": "Produto criado com sucesso.",
+            "description": "Vídeo criado com sucesso.",
             "schema": {
-              "$ref": "#/definitions/Product"
+              "$ref": "#/definitions/Video"
             }
           },
           "400": {
@@ -99,7 +70,367 @@
               "properties": {
                 "message": {
                   "type": "string",
-                  "example": "Erro interno ao tentar criar um produto."
+                  "example": "Erro interno ao tentar criar um vídeo."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/video/{id}": {
+      "delete": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Deletar um vídeo identificado pelo ID fornecido na rota.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Vídeo deletado com sucesso."
+          },
+          "400": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "ID inválido ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Nenhum vídeo cadastrado com esse ID."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Retornar um vídeo atualizado com o ID especificado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vídeo atualizado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Nenhum vídeo cadastrado com esse ID."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400-1": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "ID inválido ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400-2": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Campos inválidos ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/videos/download/{id}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Realiza o Download do vídeo com o id passado como parâmetro.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/videos": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Retornar um array de objetos com todos os vídeos cadastrados.",
+        "responses": {
+          "200": {
+            "description": "Vídeos retornados com sucesso.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Video"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno ao tentar acessar todos os vídeos."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/videos/img/{name}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Endpoint para acessar a imagem de um vídeo pelo nome.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna a imagem da thumbnail do vídeo.",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno ao tentar acessar todos os vídeos."
                 }
               },
               "xml": {
@@ -244,221 +575,6 @@
             }
           }
         }
-      }
-    },
-    "/product/{id}": {
-      "delete": {
-        "tags": [
-          "Products"
-        ],
-        "description": "Deletar um produto identificado pelo ID fornecido na rota.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Produto deletado com sucesso."
-          },
-          "400": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "ID inválido ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Nenhum produto cadastrado com esse ID."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      },
-      "patch": {
-        "tags": [
-          "Products"
-        ],
-        "description": "Retornar um produto atualizado com o ID especificado.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "New Infos",
-            "in": "body",
-            "description": "Novas informações relacionadas ao produto.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "example": "Apple iPhone 8"
-                },
-                "price": {
-                  "type": "number",
-                  "example": 1334
-                },
-                "thumbnail": {
-                  "type": "string",
-                  "example": "http://http2.mlstatic.com/D_773138-MLA43694099481_102020-I.jpg"
-                },
-                "description": {
-                  "type": "string",
-                  "example": "Smartphone de alto desempenho e bastante elegante."
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Produto atualizado com sucesso.",
-            "schema": {
-              "$ref": "#/definitions/Product"
-            }
-          },
-          "404": {
-            "description": "Not Found.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Nenhum produto cadastrado com esse ID."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "400-1": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "ID inválido ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "400-2": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Campos inválidos ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
       }
     },
     "/users/{id}": {
@@ -789,78 +905,6 @@
         ]
       }
     },
-    "/products": {
-      "get": {
-        "tags": [
-          "Products"
-        ],
-        "description": "Retornar um array de objetos com todos os produtos cadastrados.",
-        "responses": {
-          "200": {
-            "description": "Produtos retornados com sucesso.",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Product"
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Erro interno ao tentar acessar todos os produtos."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
     "/users": {
       "get": {
         "tags": [
@@ -1068,28 +1112,28 @@
         "password"
       ]
     },
-    "Product": {
+    "Video": {
       "type": "object",
       "properties": {
         "_id": {
           "type": "string",
           "example": "abc123"
         },
-        "title": {
+        "name": {
           "type": "string",
-          "example": "Apple iPhone 13"
+          "example": "Top Gang 2"
         },
-        "price": {
-          "type": "number",
-          "example": 4449
-        },
-        "thumbnail": {
+        "categorie": {
           "type": "string",
-          "example": "http://http2.mlstatic.com/D_916682-MLA47782359266_102021-I.jpg"
+          "example": "comédia"
+        },
+        "sinopse": {
+          "type": "string",
+          "example": "Filme de comédia muito engraçado."
         },
         "description": {
           "type": "string",
-          "example": "Smartphone de alto desempenho e bastante elegante."
+          "example": "1993 ‧ Comédia/Ação ‧ 1h 26m"
         },
         "createdAt": {
           "type": "string",
@@ -1101,9 +1145,9 @@
         }
       },
       "required": [
-        "title",
-        "price",
-        "thumbnail",
+        "name",
+        "categorie",
+        "sinopse",
         "description"
       ]
     }

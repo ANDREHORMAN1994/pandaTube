@@ -40,7 +40,6 @@ app.use(allRoutes);
 
 app.use(
   (err: ICustomError, _req: Request, res: Response, _next: NextFunction) => {
-    // console.log(err, 'error');
     if (err && err.statusCode) {
       const { message, statusCode } = err;
       return res.status(statusCode).json({ error: message });
