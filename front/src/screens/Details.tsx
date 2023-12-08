@@ -67,7 +67,7 @@ function Details() {
           </Heading>
           <HStack alignItems="center">
             <MovieSvg />
-            <Text color="gray.200" fontSize="sm" ml={2}>
+            <Text color="gray.200" fontSize="sm" textTransform="uppercase" ml={2}>
               {movie.categorie}
             </Text>
           </HStack>

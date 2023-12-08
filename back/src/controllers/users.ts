@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-// import { WithId } from 'mongodb';
-import { IUser, RequestWithToken } from '../types';
+import { IUser, IUserWithId, RequestWithToken } from '../types';
 import HandleError from '../utils/HandleError';
 import services from '../services';
 import { createHashLogin } from '../middleware/authJWT';
@@ -23,17 +22,17 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 };
 
 export const login = async (req: RequestWithToken, res: Response, next: NextFunction) => {
-//   const { body }: { body: IUser } = req;
-//   try {
-//     const user = await services.login(body);
-//     const userWithId = user as WithId<IUser>;
-//     const token = createHashLogin(userWithId);
-//     const userInfos = { ...userWithId, token };
-//     req.token = token;
-//     comparePassHash(body.password, userInfos, res, next);
-//   } catch (error) {
-//     next(error);
-//   }
+  const { body }: { body: IUser } = req;
+  try {
+    const user = await services.login(body);
+    const userWithId = user as IUserWithId;
+    const token = createHashLogin(userWithId);
+    const userInfos = { ...userWithId, token };
+    req.token = token;
+    comparePassHash(body.password, userInfos, res, next);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getUserById = async (req: Request, res: Response, next: NextFunction) => {

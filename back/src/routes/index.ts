@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import loginRoutes from './login';
+import loginRoutes from './users';
 import videosRoutes from './videos';
 
 const allRoutes = Router();

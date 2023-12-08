@@ -5,7 +5,7 @@ import {
   getAllUser,
   updateUser,
   deleteUserById,
-} from './login';
+} from './users';
 
 import {
   getAllVideos,

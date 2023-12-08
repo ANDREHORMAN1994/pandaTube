@@ -23,7 +23,7 @@ loginRoutes.post(
   swaggerLoginUser(controllers.login),
 );
 
-// loginRoutes.use(middleware.validateToken);
+loginRoutes.use(middleware.validateToken);
 
 loginRoutes.get(
   '/users/:id',

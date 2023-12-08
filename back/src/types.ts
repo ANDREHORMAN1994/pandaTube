@@ -13,6 +13,10 @@ export interface IUser {
   password: string;
 }
 
+export interface IUserWithId extends IUser {
+  id: string;
+}
+
 export interface RequestWithToken extends Request {
   token?: string;
   user?: IUser;
