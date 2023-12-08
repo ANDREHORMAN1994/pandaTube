@@ -1,22 +1,64 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { HStack, Heading, Icon, Text, VStack } from 'native-base';
 import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  type RouteProp,
+} from '@react-navigation/native';
 
 import { type AppRoutesNavigationProps } from '@routes/app.routes';
 import MovieSvg from '@assets/movie.svg';
 import VideoWeb from '@components/VideoWeb';
 import Loading from '@components/Loading';
+import { getVideoById } from '@utils/index';
+
+type DetailsParams = {
+  id: string;
+};
+
+type StackParamList = {
+  Details: DetailsParams;
+};
+
+type DetailsScreenRouteProp = RouteProp<StackParamList, 'Details'>;
+
+type Movie = {
+  id: string;
+  name: string;
+  description: string;
+  categorie: string;
+  ref: string;
+  sinopse: string;
+  imgUri?: string;
+  videoPlayerId?: string;
+  videoPlayerUri?: string;
+};
 
 function Details() {
+  const [movie, setMovie] = useState<Movie | null>(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
+  const {
+    params: { id },
+  } = useRoute<DetailsScreenRouteProp>();
 
   const navigation = useNavigation<AppRoutesNavigationProps>();
 
   const redirect = () => {
     navigation.goBack();
   };
+
+  useEffect(() => {
+    const request = async () => {
+      const video = await getVideoById(id);
+      setMovie(video);
+    };
+
+    request();
+  }, [id]);
+
+  if (!movie) return <Loading />;
 
   return (
     <VStack flex={1}>
@@ -25,25 +67,32 @@ function Details() {
           <Icon as={Feather} name="arrow-left" color="green.500" size={6} />
         </TouchableOpacity>
         <HStack alignItems="center">
-          <Heading  fontFamily="heading" flex={1} flexShrink={1} color="gray.100" fontSize="lg" mt={3} mb={5}>
-            Rambo IV
+          <Heading
+            fontFamily="heading"
+            flex={1}
+            flexShrink={1}
+            color="gray.100"
+            fontSize="lg"
+            mt={3}
+            mb={5}
+          >
+            {movie.name}
           </Heading>
           <HStack alignItems="center">
             <MovieSvg />
             <Text color="gray.200" fontSize="sm" ml={2}>
-              Ação
+              {movie.categorie}
             </Text>
           </HStack>
         </HStack>
       </VStack>
 
       <VStack flex={1} m={8} position="relative" h="full">
-        {!isVideoReady && (
-          <Loading />
-        )}
+        {!isVideoReady && <Loading />}
         <VideoWeb
           isVideoReady={isVideoReady}
           setIsVideoReady={setIsVideoReady}
+          movie={movie}
         />
       </VStack>
     </VStack>

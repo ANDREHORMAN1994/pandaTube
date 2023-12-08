@@ -6,22 +6,21 @@ import GroupCategories from '@components/GroupCategories';
 import HomeHeader from '@components/HomeHeader';
 import Loading from '@components/Loading';
 import VideoCard from '@components/VideoCard';
+import { getAllVideos } from '@utils/index';
 
 type Movie = {
-  id: number;
+  id: string;
   name: string;
   description: string;
-  uri: string;
+  categorie: string;
+  ref: string;
+  sinopse: string;
+  imgUri?: string;
+  videoPlayerId?: string;
+  videoPlayerUri?: string;
 };
 
 const CATEGORIES_LIST = ['todos', 'ação', 'terror', 'anime', 'comédia'];
-const MOVIES_LIST = [
-  { id: 0, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', uri: 'https://github.com/ANDREHORMAN1994.png' },
-  { id: 1, name: 'Debi & Loide', description: '1994 ‧ Comédia ‧ 1h 53m', uri: 'https://github.com/ANDREHORMAN1994.png' },
-  { id: 2, name: 'Yu Yu Hakusho', description: '1992 ‧ Anime ‧ 112 episódios', uri: 'https://github.com/ANDREHORMAN1994.png' },
-  { id: 3, name: 'A Maldição da Chorona', description: '2019 ‧ Terror ‧ 1h 34m', uri: 'https://github.com/ANDREHORMAN1994.png' },
-  { id: 4, name: 'Chapolin', description: '2019 ‧ Terror ‧ 1h 34m', uri: 'https://github.com/ANDREHORMAN1994.png' },
-];
 
 function Home() {
   const [categories, setCategories] = useState<string[]>([]);
@@ -30,14 +29,19 @@ function Home() {
 
   const navigation = useNavigation<AppRoutesNavigationProps>();
 
-  const redirect = () => {
-    navigation.navigate('details');
+  const redirect = (id: string) => {
+    navigation.navigate('details', { id });
   }
 
   useEffect(() => {
-    setCategories(CATEGORIES_LIST);
-    setActiveCategory(CATEGORIES_LIST[0]);
-    setMovies(MOVIES_LIST);
+    const request = async () => {
+      const videos = await getAllVideos();
+      setCategories(CATEGORIES_LIST);
+      setActiveCategory(CATEGORIES_LIST[0]);
+      setMovies(videos);
+    };
+
+    request();
   }, []);
 
   if (!categories.length) return <Loading />;
@@ -77,12 +81,12 @@ function Home() {
               return description.toLowerCase().includes(activeCategory.toLowerCase());
             })}
           keyExtractor={(item: Movie) => item.id.toString()}
-          renderItem={({ item: { name, description, uri } }) => (
+          renderItem={({ item: {id, name, description, imgUri } }) => (
             <VideoCard
               name={name}
               description={description}
-              uri={uri}
-              onPress={redirect}
+              imgUri={imgUri?.replace('localhost', '10.0.2.2') ?? ''}
+              onPress={() => redirect(id)}
             />
           )}
           showsVerticalScrollIndicator={false}

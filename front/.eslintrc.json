@@ -29,6 +29,8 @@
     "prefer-destructuring": "off",
     "react/no-unstable-nested-components": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "@typescript-eslint/unbound-method": "off"
+    "@typescript-eslint/unbound-method": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-floating-promises": "off"
   }
 }

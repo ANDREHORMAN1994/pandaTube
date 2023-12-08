@@ -5,10 +5,10 @@ import { Entypo } from '@expo/vector-icons';
 type Props = TouchableOpacityProps & {
   name: string;
   description: string;
-  uri: string;
+  imgUri: string;
 };
 
-function VideoCard({ name, description, uri, ...rest }: Props) {
+function VideoCard({ name, description, imgUri, ...rest }: Props) {
   return (
     <TouchableOpacity {...rest}>
       <HStack
@@ -20,7 +20,7 @@ function VideoCard({ name, description, uri, ...rest }: Props) {
         alignItems="center"
       >
         <Image
-          source={{ uri }}
+          source={{ uri: imgUri }}
           w={16}
           h={16}
           rounded="md"

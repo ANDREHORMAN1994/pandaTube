@@ -1,17 +1,31 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ScrollView, Text, VStack, useTheme } from 'native-base';
 import { Video, ResizeMode } from 'expo-av';
 import { useNavigationState } from '@react-navigation/native';
-import file from '@assets/Black_Sheep_Scott_Pilgrim.mp4';
 import DownloadSvg from '@assets/download.svg';
+import { getVideoFile } from '@utils/index';
 import Button from './Button';
 
+type Movie = {
+  id: string;
+  name: string;
+  description: string;
+  categorie: string;
+  ref: string;
+  sinopse: string;
+  imgUri?: string;
+  videoPlayerId?: string;
+  videoPlayerUri?: string;
+};
+
 type Props = {
+  movie: Movie;
   isVideoReady: boolean;
   setIsVideoReady: (value: boolean) => void;
 };
 
-function VideoWeb({ isVideoReady, setIsVideoReady }: Props) {
+function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
+  const [pathFile, setPathFile] = useState<string>('');
   const video = useRef<any>(null);
   const { sizes } = useTheme();
 
@@ -24,6 +38,15 @@ function VideoWeb({ isVideoReady, setIsVideoReady }: Props) {
     }
   }, [route]);
 
+  useEffect(() => {
+    const request = (path: string) => {
+      const videoPath = getVideoFile(path)
+      setPathFile(videoPath);
+    }
+
+    request(movie.videoPlayerId ?? '');
+  }, [movie.videoPlayerId]);
+
   return (
     <VStack w="full" h="full" position="absolute" top={0} left={0}>
       <Video
@@ -34,7 +57,7 @@ function VideoWeb({ isVideoReady, setIsVideoReady }: Props) {
           height: sizes[56],
           borderRadius: 5,
         }}
-        source={file}
+        source={ { uri: pathFile } }
         resizeMode={ResizeMode.CONTAIN}
         onPlaybackStatusUpdate={newStatus => setIsVideoReady(newStatus.isLoaded)}
         useNativeControls
@@ -50,7 +73,7 @@ function VideoWeb({ isVideoReady, setIsVideoReady }: Props) {
               textAlign="center"
               mb={5}
             >
-            O veterano de guerra John Rambo é recrutado para resgatar missionários capturados na Birmânia, desencadeando uma missão de ação intensa.
+              {movie.sinopse}
             </Text>
             <Button
               name="Baixar Vídeo"
