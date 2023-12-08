@@ -13,31 +13,18 @@ import MovieSvg from '@assets/movie.svg';
 import VideoWeb from '@components/VideoWeb';
 import Loading from '@components/Loading';
 import { getVideoById } from '@utils/index';
-
-type DetailsParams = {
-  id: string;
-};
+import { type IMovie } from 'src/types';
 
 type StackParamList = {
-  Details: DetailsParams;
+  Details: {
+    id: string;
+  };
 };
 
 type DetailsScreenRouteProp = RouteProp<StackParamList, 'Details'>;
 
-type Movie = {
-  id: string;
-  name: string;
-  description: string;
-  categorie: string;
-  ref: string;
-  sinopse: string;
-  imgUri?: string;
-  videoPlayerId?: string;
-  videoPlayerUri?: string;
-};
-
 function Details() {
-  const [movie, setMovie] = useState<Movie | null>(null);
+  const [movie, setMovie] = useState<IMovie | null>(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const {
     params: { id },

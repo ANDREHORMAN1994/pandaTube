@@ -4,22 +4,11 @@ import { Video, ResizeMode } from 'expo-av';
 import { useNavigationState } from '@react-navigation/native';
 import DownloadSvg from '@assets/download.svg';
 import { getVideoFile } from '@utils/index';
+import { type IMovie } from 'src/types';
 import Button from './Button';
 
-type Movie = {
-  id: string;
-  name: string;
-  description: string;
-  categorie: string;
-  ref: string;
-  sinopse: string;
-  imgUri?: string;
-  videoPlayerId?: string;
-  videoPlayerUri?: string;
-};
-
 type Props = {
-  movie: Movie;
+  movie: IMovie;
   isVideoReady: boolean;
   setIsVideoReady: (value: boolean) => void;
 };

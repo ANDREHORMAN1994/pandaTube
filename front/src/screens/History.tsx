@@ -2,48 +2,17 @@ import { useEffect, useState } from 'react';
 import { Heading, VStack, SectionList, Text } from 'native-base';
 import HistoryCard from '@components/HistoryCard';
 import Title from '@components/Title';
-
-type Movie = {
-  id: number;
-  name: string;
-  description: string;
-  hour: string;
-};
+import { type IHistory } from 'src/types';
 
 type HistoryList = {
   title: string;
-  data: Movie[];
+  data: IHistory[];
 };
 
 const HISTORY_LIST = [
   {
     title: '04.12.23',
-    data: [{ id: 0, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' }],
-  },
-  {
-    title: '03.12.23',
-    data: [
-      { id: 0, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-      { id: 1, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-      { id: 2, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-    ],
-  },
-  {
-    title: '02.12.23',
-    data: [
-      { id: 0, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-      { id: 1, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-      { id: 2, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-    ],
-  },
-  {
-    title: '01.12.23',
-    data: [
-      { id: 0, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-      { id: 1, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-      { id: 2, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-      { id: 3, name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' },
-    ],
+    data: [{ id: '0', name: 'Rambo IV', description: '2008 ‧ Ação ‧ 1h 33m', hour: '20:00' }],
   },
 ];
 
@@ -60,7 +29,7 @@ function History() {
       <VStack px={8} py={2}>
         <SectionList
           sections={historyList}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.id}
           renderItem={({ section, item }) => (
             <HistoryCard
               key={section.title + item.id}

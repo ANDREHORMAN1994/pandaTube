@@ -8,7 +8,6 @@ import * as FileSystem from 'expo-file-system';
 import Input from '@components/Input';
 import Button from '@components/Button';
 
-
 const PHOTO_SIZE = 33;
 
 function Profile() {

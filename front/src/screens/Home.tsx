@@ -6,26 +6,15 @@ import GroupCategories from '@components/GroupCategories';
 import HomeHeader from '@components/HomeHeader';
 import Loading from '@components/Loading';
 import VideoCard from '@components/VideoCard';
-import { getAllVideos } from '@utils/index';
-
-type Movie = {
-  id: string;
-  name: string;
-  description: string;
-  categorie: string;
-  ref: string;
-  sinopse: string;
-  imgUri?: string;
-  videoPlayerId?: string;
-  videoPlayerUri?: string;
-};
+import { downloadVideo, getAllVideos } from '@utils/index';
+import { type IMovie } from 'src/types';
 
 const CATEGORIES_LIST = ['todos', 'ação', 'terror', 'anime', 'comédia'];
 
 function Home() {
   const [categories, setCategories] = useState<string[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<IMovie[]>([]);
 
   const navigation = useNavigation<AppRoutesNavigationProps>();
 
@@ -36,6 +25,11 @@ function Home() {
   useEffect(() => {
     const request = async () => {
       const videos = await getAllVideos();
+      await Promise.all(videos.map(async ({ videoPlayerId }) => {
+        if (!videoPlayerId) return;
+        await downloadVideo(videoPlayerId);
+      }));
+
       setCategories(CATEGORIES_LIST);
       setActiveCategory(CATEGORIES_LIST[0]);
       setMovies(videos);
@@ -80,7 +74,7 @@ function Home() {
               if (activeCategory === 'todos') return true;
               return description.toLowerCase().includes(activeCategory.toLowerCase());
             })}
-          keyExtractor={(item: Movie) => item.id.toString()}
+          keyExtractor={(item: IMovie) => item.id}
           renderItem={({ item: {id, name, description, imgUri } }) => (
             <VideoCard
               name={name}
