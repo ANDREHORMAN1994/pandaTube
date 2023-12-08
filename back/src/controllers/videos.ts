@@ -11,8 +11,8 @@ import {
   getPandaVideoFile,
 } from '../utils/pandaVideoFunctions';
 
-const DIR_FILE = path.join(__dirname, '../../tmp/img');
-const DIR_FILE_VIDEO = path.join(__dirname, '../../tmp/videos');
+const DIR_FILE = path.join(__dirname, '../../public/img');
+const DIR_FILE_VIDEO = path.join(__dirname, '../../public/videos');
 
 export const createVideo = async (
   req: RequestWithToken,
@@ -83,6 +83,25 @@ export const getAllVideos = async (
     throw new HandleError(
       StatusCodes.INTERNAL_SERVER_ERROR,
       'Erro interno ao tentar acessar todos os videos.',
+    );
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getVideoById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const video = await services.getVideoById(req.params.id);
+    if (video) {
+      return res.status(StatusCodes.OK).json(video);
+    }
+    throw new HandleError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      'Erro interno ao tentar acessar o video.',
     );
   } catch (error) {
     next(error);

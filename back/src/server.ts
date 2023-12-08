@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
 import swaggerUi from 'swagger-ui-express';
+import path from 'path';
 import swaggerFile from '../swagger_output.json';
 import connect from './models/connect';
 import allRoutes from './routes';
@@ -23,6 +24,8 @@ const app = express();
 
 app.use(cors(CORS_OPTIONS));
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 connect();
 

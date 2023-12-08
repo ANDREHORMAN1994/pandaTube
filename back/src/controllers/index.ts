@@ -1,6 +1,11 @@
-// import {
-//   login, createUser, getUserById, getAllUser, updateUser, deleteUserById,
-// } from './login';
+import {
+  login,
+  createUser,
+  getUserById,
+  getAllUser,
+  updateUser,
+  deleteUserById,
+} from './login';
 
 import {
   getAllVideos,
@@ -9,19 +14,21 @@ import {
   downloadVideo,
   getImageByName,
   updateVideo,
+  getVideoById,
 } from './videos';
 
 export default {
-  // login,
-  // createUser,
-  // getUserById,
-  // getAllUser,
-  // updateUser,
-  // deleteUserById,
+  login,
+  createUser,
+  getUserById,
+  getAllUser,
+  updateUser,
+  deleteUserById,
   getAllVideos,
   createVideo,
   deleteVideo,
   downloadVideo,
   getImageByName,
   updateVideo,
+  getVideoById,
 };

@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const API_DOWNLOAD = 'https://download-us01.pandavideo.com:7443';
-const DIR_FILE = path.join(__dirname, '../../tmp/videos');
+const DIR_FILE = path.join(__dirname, '../../public/videos');
 
 const { API_KEY, API_URL } = process.env;
 const LIMIT = 5000;

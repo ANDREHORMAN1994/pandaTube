@@ -2,7 +2,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-const DIR_FILE = path.join(__dirname, '../../tmp/img');
+const DIR_FILE = path.join(__dirname, '../../public/img');
 
 const storage = multer.diskStorage({
   destination(_req, _file, cb) {

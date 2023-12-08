@@ -36,6 +36,13 @@ export const updateVideo = async (id: string, video: IVideo) => {
   return null;
 };
 
+export const getVideoById = async (id: string) => {
+  const collection = admin.firestore().collection('videos');
+  const result = await collection.doc(id).get();
+  if (result) return result.data();
+  return null;
+};
+
 export const deleteVideo = async (id: string) => {
   const collection = admin.firestore().collection('videos');
   const result = await collection.doc(id).delete();

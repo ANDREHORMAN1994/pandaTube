@@ -22,6 +22,12 @@ export const getAllVideos = async () => {
   return null;
 };
 
+export const getVideoById = async (id: string) => {
+  const video = await models.getVideoById(id);
+  if (video) return video;
+  return null;
+};
+
 export const updateVideo = async (id: string, video: IVideo) => {
   const allVideos = await getAllPandaVideos();
   const pandaVideo = allVideos.videos.find((v: any) => v.title === video.ref);

@@ -24,7 +24,14 @@ videosRoutes.get(
 );
 
 videosRoutes.get(
+  '/videos/:id',
+  middleware.valId,
+  controllers.getVideoById,
+);
+
+videosRoutes.get(
   '/videos/download/:id',
+  middleware.valId,
   swaggerDownloadVideo(controllers.downloadVideo),
 );
 
