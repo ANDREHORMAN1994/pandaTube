@@ -45,6 +45,10 @@ export const downloadVideo = async (
   try {
     const { id } = req.params;
 
+    if (!fs.existsSync(DIR_FILE_VIDEO)) {
+      fs.mkdirSync(DIR_FILE_VIDEO);
+    }
+
     const videoExists = await getMediaByPath(DIR_FILE_VIDEO, id);
     if (videoExists) {
       console.log('Vídeo já foi baixado anteriormente.');
