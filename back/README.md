@@ -1,9 +1,9 @@
 <h1 align="center">
-  <p>BACK-END 📱</p>
+  <p>PandaTube API 🎥</p>
 </h1>
 
 <h3 align="center">
-  Api Node + TS | Express.js | MongoDB
+  Api Node + TS | Express.js | Firestore | Swagger
 </h3>
 
 <p align="center">
@@ -11,38 +11,39 @@
   <a href="#como-usar-rocket">Como Usar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#funcionalidades-star">Funcionalidades</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#tecnologias-man_technologist">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#padrão-de-commits-barber">Padrão de commits</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="https://challenge-allu-back.vercel.app/" target="_blank">Aplicação na Vercel</a>
 </p>
 
 <p align="center">
-  <img alt="design do projeto" width="650px" src="./.github/challenge-allu-back.png" />
+  <img alt="design do projeto" width="650px" src="./.github/mockup.png" />
 <p>
 
 
 ## Sobre :wave:
 
-Essa API oferece recursos para o cadastro de usuários e o gerenciamento completo de produtos cadastrados.
-É possível realizar um `CRUD` completo, sendo capaz de criar, visualizar, editar e remover cada produto.
+Essa API oferece recursos para o cadastro de usuários e o gerenciamento completo dos vídeos cadastrados.
+É possível realizar um `CRUD` sendo capaz de criar, visualizar, editar e remover cada vídeo.
 
 
 ## Como Usar :rocket:
 
 **Para acessar a documentação da API, utilize a rota `/docs` para mais detalhes**
 
-[https://challenge-allu-back.vercel.app/](https://challenge-allu-back.vercel.app/)
+## Instalação
 
-Para ter acesso a informações mais detalhadas da Slido API, acesse a documentação através do link abaixo:
+Para executar a aplicação, realize os passos a seguir:
 
-[Documentação Slido API](https://challenge-allu-back.vercel.app/docs/)
+* Clone o repositório ou realize um fork para o seu GitHub.
+* Entre no diretório do projeto --> `cd pandaTube/back`.
+* Instale as dependências do projeto --> `npm install`.
+* Execute a aplicação --> `npm run dev`.
 
 
 ## Funcionalidades :star:
 
-Vamos trabalhar em cima de duas collections do mongoDB:
+Vamos trabalhar em cima de duas collections do Cloud Firestore:
 
  - `Users`
- - `Products`
+ - `Videos`
 
 Em relação ao schema do `Users`, é possível acessar as seguintes rotas:
 
@@ -68,30 +69,36 @@ Em relação ao schema do `Users`, é possível acessar as seguintes rotas:
 ```BASH
 // Exemplo de acesso para a rota get /users
 
-https://challenge-allu-back.vercel.app/users
+http://localhost:3001/users
 ```
 
-Em relação ao schema dos `Products`, é possível acessar as seguintes rotas:
+Em relação ao schema dos `Videos`, é possível acessar as seguintes rotas:
 
- - `POST /product`
- > Cria um novo produto com os dados fornecidos no corpo da requisição, valida se o token JWT de acesso é válido e valida os campos do body.
+ - `POST /video`
+ > Cria um novo vídeo com os dados fornecidos no corpo da requisição e valida os campos do body.
 
- - `POST /products`
- > Restaura os dados de todos os produtos originais armazenados no banco de dados.
+ - `GET /videos/{id}`
+ > Retorna um vídeo com o ID especificado, valida se o id é passado como parâmetro na rota.
 
- - `GET /products`
- > Retorna uma lista com todos os produtos cadastrados e valida se o token JWT de acesso é válido.
+ - `GET /videos`
+ > Retorna uma lista com todos os vídeos cadastrados.
+
+ - `GET /videos/download/{id}`
+ > Realiza o download do vídeo na pasta public/videos para ser acessado pelo usuário.
+
+ - `GET /videos/img/{name}`
+ > Retorna uma imagem com o nome especificado para ser usada de thumbnail, valida se o nome é passado como parâmetro na rota.
 
  - `PATCH /product/{id}`
  > Retorna as informações atualizadas do produto, valida se o id é passado como parâmetro na rota, se o token JWT de acesso é válido e valida os campos do body.
 
- - `DELETE /product/{id}`
- > Deleta um produto identificado pelo ID fornecido na rota, valida se o id é passado como parâmetro na rota e se o token JWT de acesso é válido.
+ - `DELETE /video/{id}`
+ > Deleta um vídeo identificado pelo ID fornecido na rota e valida se o id é passado como parâmetro na rota.
 
 ```BASH
 // Exemplo de acesso para a rota get /products
 
-https://challenge-allu-back.vercel.app/products
+http://localhost:3001/products
 ```
 
 
@@ -107,8 +114,10 @@ Segue abaixo a lista de tecnologias utilizada no projeto:
  > Linguagem que adiciona tipagem estática ao JavaScript, tornando-o mais seguro e produtivo para o desenvolvimento de software.
  - `tsx`
  > Ferramenta que monitora as alterações no código e reinicia o servidor automaticamente;
- - `MongoDB`
- > Banco de dados NoSQL orientado a documentos;
+ - `Firebase`
+ > Plataforma de desenvolvimento de aplicativos móveis e da web;
+ - `Cloud Firestore`
+ > Banco de dados NoSQL hospedado na nuvem do Firebase;
  - `EsLint`
  > Ferramenta para análise estática de código JavaScript;
  - `http-status-codes`
@@ -119,87 +128,5 @@ Segue abaixo a lista de tecnologias utilizada no projeto:
  > Padrão de token de acesso utilizado para autenticação e autorização em aplicações web;
  - `Swagger`
  > Ferramenta para documentação de APIs;
- - `Vercel`
- > Plataforma de hospedagem voltada para aplicações web modernas e escaláveis.
-
-
-## Padrão de commits :barber:
-
-<table>
-  <thead>
-    <tr>
-      <th>Comando git</th>
-      <th>Resultado no GitHub</th>
-    </tr>
-  </thead>
- <tbody>
-    <tr>
-      <td>
-        <code>git commit -m ":tada: Commit inicial"</code>
-      </td>
-      <td>🎉 Commit inicial</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":books: docs: Atualizaçao do README"</code>
-      </td>
-      <td>📚 docs: Atualizaçao do README</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":bug: fix: Loop infinito na linha 50"</code>
-      </td>
-      <td>🐛 fix: Loop infinito na linha 50</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":sparkles: feat: Pagina de login"</code>
-      </td>
-      <td>✨ feat: Pagina de login</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":bricks: ci: Modificaçao no Dockerfile"</code>
-      </td>
-      <td>🧱 ci: Modificaçao no Dockerfile</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":recycle: refactor: Passando para arrow functions"</code>
-      </td>
-      <td>♻️ refactor: Passando para arrow functions</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":zap: perf: Melhoria no tempo de resposta"</code>
-      </td>
-      <td>⚡ perf: Melhoria no tempo de resposta</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":boom: fix: Revertendo mudanças ineficientes"</code>
-      </td>
-      <td>💥 fix: Revertendo mudanças ineficientes</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":lipstick: feat: Estilizaçao CSS do formulario"</code>
-      </td>
-      <td>💄 feat: Estilizaçao CSS do formulario</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":test_tube: test: Criando novo teste"</code>
-      </td>
-      <td>🧪 test: Criando novo teste</td>
-    </tr>
-    <tr>
-      <td>
-        <code>git commit -m ":bulb: docs: Comentários novos"</code>
-      </td>
-      <td>💡 docs: Comentários novos</td>
-    </tr>
-  </tbody>
-</table>
 
 ---
