@@ -4,8 +4,8 @@
 
 Consulte os links abaixo para obter mais informações sobre o projeto e instruções passo a passo para rodar essa aplicação em seu próprio computador:
 
- - [Documentação do Front-End](https://github.com/ANDREHORMAN1994/challenge-allu/blob/main/front/README.md)
- - [Documentação do Back-End](https://github.com/ANDREHORMAN1994/challenge-allu/blob/main/back/README.md)
+ - [Documentação do Front-End](https://github.com/ANDREHORMAN1994/pandaTube/blob/main/front/README.md)
+ - [Documentação do Back-End](https://github.com/ANDREHORMAN1994/pandaTube/blob/main/back/README.md)
 
 ---
 
