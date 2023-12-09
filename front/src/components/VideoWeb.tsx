@@ -32,7 +32,11 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
     });
   });
 
-  const downloadVideo = async (videoUrl: string, videoName: string) => {
+  const requestVideoUrl = (path: string) => getVideoFile(path);
+
+  const downloadVideo = async (videoName: string) => {
+    const videoUrl = requestVideoUrl(movie.videoPlayerId ?? '');
+
     const downloadObject = FileSystem.createDownloadResumable(
       videoUrl,
       FileSystem.documentDirectory + videoName
@@ -46,11 +50,6 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
   };
 
   useEffect(() => {
-    const request = (path: string) => {
-      const videoPath = getVideoFile(path);
-      setPathFile(videoPath);
-    };
-
     const checkIfFileExists = async () => {
       const fileInfo = await FileSystem.getInfoAsync(
         FileSystem.documentDirectory + movie.ref
@@ -58,7 +57,8 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
       if (fileInfo.exists) {
         setPathFile(fileInfo.uri);
       } else if (movie.videoPlayerId) {
-        request(movie.videoPlayerId);
+        const videoUrl = requestVideoUrl(movie.videoPlayerId);
+        setPathFile(videoUrl);
       }
     };
 
@@ -104,7 +104,7 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
             <Button
               name="Baixar Vídeo"
               icon={<DownloadSvg />}
-              onPress={async () => downloadVideo(pathFile, movie.ref)}
+              onPress={async () => downloadVideo(movie.ref)}
             />
           </VStack>
         </ScrollView>
