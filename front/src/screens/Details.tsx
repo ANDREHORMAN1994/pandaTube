@@ -8,6 +8,7 @@ import {
   useNavigation,
   useRoute,
   type RouteProp,
+  useNavigationState,
 } from '@react-navigation/native';
 
 import { type AppRoutesNavigationProps } from '@routes/app.routes';
@@ -34,6 +35,8 @@ function Details() {
 
   const toast = useToast();
   const navigation = useNavigation<AppRoutesNavigationProps>();
+  const { routeNames, index } = useNavigationState((state) => state);
+  const route = routeNames[index];
 
   const redirect = () => {
     navigation.goBack();
@@ -63,7 +66,7 @@ function Details() {
         showToast.current(video.error);
       } else {
         const infoHistory: IHistorySection = {
-          title: "04.12.23",
+          title: format(new Date(), 'dd.MM.yy'),
           data: [
             {
               id,
@@ -74,15 +77,21 @@ function Details() {
           ]
         }
 
-        const result = await createHistory(infoHistory, token);
-        if ('title' in result) {
-          setMovie(video);
-        }
+        await createHistory(infoHistory, token);
+        setMovie(video);
       }
     };
 
-    request();
-  }, [id]);
+    if (route === 'details') {
+      request();
+    }
+  }, [id, route]);
+
+  useEffect(() => {
+    if (route !== 'details') {
+      setMovie(null);
+    }
+  }, [route]);
 
   if (!movie) return <Loading />;
 

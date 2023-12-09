@@ -8,7 +8,10 @@ export const createHistory = async (history: IHistorySection) => {
     updatedAt: null,
   };
   const collection = admin.firestore().collection('historys');
-  const existHistory = await collection.where('title', '==', newHistorys.title).get();
+  const existHistory = await collection
+    .where('title', '==', newHistorys.title)
+    .get();
+
   if (existHistory.empty) {
     const { id } = await collection.add(newHistorys);
     return {
@@ -16,14 +19,22 @@ export const createHistory = async (history: IHistorySection) => {
       ...newHistorys,
     };
   }
-  const updateHistory = await collection.doc(existHistory.docs[0].id).update({
-    data: [...existHistory.docs[0].data().data, ...newHistorys.data],
-    updatedAt: new Date(),
-  });
-  if (updateHistory) {
-    const result = await collection.doc(existHistory.docs[0].id).get();
-    return result.data();
+
+  if (
+    existHistory.docs[0]
+      .data()
+      .data.every((item: any) => item.name !== newHistorys.data[0].name)
+  ) {
+    const updateHistory = await collection.doc(existHistory.docs[0].id).update({
+      data: [...existHistory.docs[0].data().data, ...newHistorys.data],
+      updatedAt: new Date(),
+    });
+    if (updateHistory) {
+      const result = await collection.doc(existHistory.docs[0].id).get();
+      return result.data();
+    }
   }
+
   return null;
 };
 
