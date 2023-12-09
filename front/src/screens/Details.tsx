@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { HStack, Heading, Icon, Text, VStack, useToast } from 'native-base';
 import * as SecureStore from 'expo-secure-store';
+import { format } from 'date-fns';
 import { TouchableOpacity } from 'react-native';
 import {
   useNavigation,
@@ -13,8 +14,8 @@ import { type AppRoutesNavigationProps } from '@routes/app.routes';
 import MovieSvg from '@assets/movie.svg';
 import VideoWeb from '@components/VideoWeb';
 import Loading from '@components/Loading';
-import { getVideoById } from '@utils/index';
-import { type IMovie } from 'src/types';
+import { createHistory, getVideoById } from '@utils/index';
+import { type IHistorySection, type IMovie } from 'src/types';
 
 type StackParamList = {
   Details: {
@@ -61,7 +62,22 @@ function Details() {
       if ('error' in video) {
         showToast.current(video.error);
       } else {
-        setMovie(video);
+        const infoHistory: IHistorySection = {
+          title: "04.12.23",
+          data: [
+            {
+              id,
+              name: video.name,
+              description: video.description,
+              hour: format(new Date(), 'HH:mm'),
+            },
+          ]
+        }
+
+        const result = await createHistory(infoHistory, token);
+        if ('title' in result) {
+          setMovie(video);
+        }
       }
     };
 

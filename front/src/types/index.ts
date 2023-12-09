@@ -22,9 +22,16 @@ export type IMovie = {
   videoPlayerUri?: string;
 };
 
-export type IHistory = {
+export interface IHistory {
   id: string;
   name: string;
   description: string;
   hour: string;
-};
+}
+
+export interface IHistorySection {
+  title: string;
+  data: IHistory[];
+  createdAt?: Date;
+  updatedAt?: Date | null;
+}

@@ -30,7 +30,6 @@ export const getAllHistorys = async (
   next: NextFunction,
 ) => {
   try {
-    console.log('allHistorys');
     const allHistorys = await services.getAllHistorys();
     if (allHistorys) {
       return res.status(StatusCodes.OK).json(allHistorys);

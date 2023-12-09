@@ -18,7 +18,7 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
   const video = useRef<any>(null);
   const { sizes } = useTheme();
 
-  const { routeNames, index } = useNavigationState(state => state);
+  const { routeNames, index } = useNavigationState((state) => state);
   const route = routeNames[index];
 
   useEffect(() => {
@@ -29,9 +29,9 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
 
   useEffect(() => {
     const request = (path: string) => {
-      const videoPath = getVideoFile(path)
+      const videoPath = getVideoFile(path);
       setPathFile(videoPath);
-    }
+    };
 
     request(movie.videoPlayerId ?? '');
   }, [movie.videoPlayerId]);
@@ -46,9 +46,11 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
           height: sizes[56],
           borderRadius: 5,
         }}
-        source={ { uri: pathFile } }
+        source={{ uri: pathFile }}
         resizeMode={ResizeMode.CONTAIN}
-        onPlaybackStatusUpdate={newStatus => setIsVideoReady(newStatus.isLoaded)}
+        onPlaybackStatusUpdate={(newStatus) =>
+          setIsVideoReady(newStatus.isLoaded)
+        }
         useNativeControls
         isLooping
       />
@@ -64,10 +66,7 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
             >
               {movie.sinopse}
             </Text>
-            <Button
-              name="Baixar Vídeo"
-              icon={<DownloadSvg />}
-            />
+            <Button name="Baixar Vídeo" icon={<DownloadSvg />} />
           </VStack>
         </ScrollView>
       )}

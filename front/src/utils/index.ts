@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { type IUser, type IMovie, type IError } from 'src/types';
+import { type IUser, type IMovie, type IError, type IHistorySection } from 'src/types';
 
 const BASE_EP = 'http://10.0.2.2:3001';
 
@@ -30,6 +30,20 @@ export const createUser = async (infoUser: IUser): Promise<IUser | IError> => {
     .catch((error: any) => error.response.data);
 };
 
+export const createHistory = async (infoHistory: IHistorySection, token: string): Promise<IHistorySection | IError> => {
+  const options = {
+    method: 'POST',
+    url: `${BASE_EP}/history`,
+    data: infoHistory,
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  return axios
+    .request(options)
+    .then((response: any) => response.data)
+    .catch((error: any) => error.response.data);
+};
+
 export const updateUserById = async (id: string, infoUser: IUser, token: string): Promise<IUser | IError> => {
   const options = {
     method: 'GET',
@@ -48,6 +62,19 @@ export const getUserById = async (id: string, token: string): Promise<IUser | IE
   const options = {
     method: 'GET',
     url: `${BASE_EP}/users/${id}`,
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  return axios
+    .request(options)
+    .then((response: any) => response.data)
+    .catch((error: any) => error.response.data);
+};
+
+export const getAllHistory = async (token: string): Promise<IHistorySection[] | IError> => {
+  const options = {
+    method: 'GET',
+    url: `${BASE_EP}/history`,
     headers: { Authorization: `Bearer ${token}` },
   };
 
