@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { ScrollView, Text, VStack, useTheme } from 'native-base';
+import { ScrollView, Text, VStack, useTheme, useToast } from 'native-base';
 import { Video, ResizeMode } from 'expo-av';
+import * as FileSystem from 'expo-file-system';
 import { useNavigationState } from '@react-navigation/native';
 import DownloadSvg from '@assets/download.svg';
 import { getVideoFile } from '@utils/index';
@@ -15,17 +16,34 @@ type Props = {
 
 function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
   const [pathFile, setPathFile] = useState<string>('');
-  const video = useRef<any>(null);
   const { sizes } = useTheme();
-
+  const video = useRef<any>(null);
+  const toast = useToast();
   const { routeNames, index } = useNavigationState((state) => state);
   const route = routeNames[index];
 
-  useEffect(() => {
-    if (route !== 'details') {
-      video.current?.pauseAsync();
+  const showToast = useRef((message: string) => {
+    toast.closeAll();
+    toast.show({
+      title: 'Concluído',
+      description: message,
+      placement: 'top',
+      bgColor: 'green.500',
+    });
+  });
+
+  const downloadVideo = async (videoUrl: string, videoName: string) => {
+    const downloadObject = FileSystem.createDownloadResumable(
+      videoUrl,
+      FileSystem.documentDirectory + videoName
+    );
+
+    const uri = await downloadObject.downloadAsync();
+    if (uri) {
+      showToast.current('Vídeo baixado com sucesso!');
+      setPathFile(uri?.uri);
     }
-  }, [route]);
+  };
 
   useEffect(() => {
     const request = (path: string) => {
@@ -33,8 +51,25 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
       setPathFile(videoPath);
     };
 
-    request(movie.videoPlayerId ?? '');
-  }, [movie.videoPlayerId]);
+    const checkIfFileExists = async () => {
+      const fileInfo = await FileSystem.getInfoAsync(
+        FileSystem.documentDirectory + movie.ref
+      );
+      if (fileInfo.exists) {
+        setPathFile(fileInfo.uri);
+      } else if (movie.videoPlayerId) {
+        request(movie.videoPlayerId);
+      }
+    };
+
+    checkIfFileExists();
+  }, [movie.ref, movie.videoPlayerId]);
+
+  useEffect(() => {
+    if (route !== 'details') {
+      video.current?.pauseAsync();
+    }
+  }, [route]);
 
   return (
     <VStack w="full" h="full" position="absolute" top={0} left={0}>
@@ -66,7 +101,11 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
             >
               {movie.sinopse}
             </Text>
-            <Button name="Baixar Vídeo" icon={<DownloadSvg />} />
+            <Button
+              name="Baixar Vídeo"
+              icon={<DownloadSvg />}
+              onPress={async () => downloadVideo(pathFile, movie.ref)}
+            />
           </VStack>
         </ScrollView>
       )}
