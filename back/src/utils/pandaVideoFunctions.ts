@@ -65,7 +65,7 @@ export const getAllPandaVideos = async () => {
     .request(options)
     .then((response) => response.data)
     .catch((error) => {
-      console.error(error);
+      console.log(error);
     });
 };
 

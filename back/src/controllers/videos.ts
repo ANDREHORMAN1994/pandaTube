@@ -51,12 +51,11 @@ export const downloadVideo = async (
 
     const videoExists = await getMediaByPath(DIR_FILE_VIDEO, id);
     if (videoExists) {
-      console.log('Vídeo já foi baixado anteriormente.');
+      // console.log('Vídeo já foi baixado anteriormente.');
       return res.status(200).json({ message: 'Vídeo já baixado anteriormente' });
     }
 
     const data = await getPandaVideoFile();
-    console.log('data', data);
     if (!data || (data && !data.videos.length)) {
       throw new Error('Nenhum video encontrado');
     }
@@ -66,7 +65,7 @@ export const downloadVideo = async (
     });
 
     await Promise.all(downloadPromises);
-    console.log('Download concluído!!!');
+    // console.log('Download concluído!!!');
 
     return res.status(200).json({ message: 'Download concluído com sucesso' });
   } catch (error) {

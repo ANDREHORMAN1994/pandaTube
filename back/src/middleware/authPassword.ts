@@ -36,10 +36,10 @@ export const comparePassHash = (
 ) => {
   bcrypt.compare(password, user.password, (_err, result) => {
     if (result) {
-      console.log('Senha correta!');
+      // console.log('Senha correta!');
       return res.status(StatusCodes.OK).json(user);
     }
-    console.log('Senha incorreta!');
+    // console.log('Senha incorreta!');
     const error = new HandleError(
       StatusCodes.UNAUTHORIZED,
       'A senha está errada ou incompatível.',

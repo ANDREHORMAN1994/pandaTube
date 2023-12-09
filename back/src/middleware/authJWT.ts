@@ -34,7 +34,7 @@ export const validateToken = (req: RequestWithToken, _res: Response, next: NextF
       return next(error);
     }
 
-    console.log(decoded, 'infos token');
+    // console.log(decoded, 'infos token');
     if (decoded) {
       req.user = decoded as IUser;
     }
