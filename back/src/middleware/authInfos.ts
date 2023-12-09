@@ -1,7 +1,30 @@
 import { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import HandleError from '../utils/HandleError';
-import { IUser, IVideo } from '../types';
+import { IHistorySection, IUser, IVideo } from '../types';
+
+export const valInfoHistory = (
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+) => {
+  const { body }: { body: IHistorySection } = req;
+  try {
+    if (
+      !body
+      || !body.title
+      || !body.data
+    ) {
+      throw new HandleError(
+        StatusCodes.BAD_REQUEST,
+        'Campos inválidos ou faltando.',
+      );
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const valInfoVideo = (
   req: Request,

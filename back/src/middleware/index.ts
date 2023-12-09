@@ -1,6 +1,8 @@
 import { createPassHash, comparePassHash } from './authPassword';
 import { createHashLogin, validateToken } from './authJWT';
-import { valInfoVideo, valInfoUser, valId } from './authInfos';
+import {
+  valInfoVideo, valInfoUser, valId, valInfoHistory,
+} from './authInfos';
 
 export default {
   valInfoVideo,
@@ -10,4 +12,5 @@ export default {
   createHashLogin,
   validateToken,
   valId,
+  valInfoHistory,
 };

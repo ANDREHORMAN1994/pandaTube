@@ -1,7 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { NextFunction, Request, Response } from 'express';
 
-export type ControllerFunction = (_req: Request, _res: Response, _next: NextFunction) => void;
+export type ControllerFunction = (
+  _req: Request,
+  _res: Response,
+  _next: NextFunction,
+) => void;
 
 export interface ICustomError extends Error {
   statusCode?: number;
@@ -11,6 +15,20 @@ export interface IUser {
   name?: string;
   email: string;
   password: string;
+}
+
+export interface IHistory {
+  id: string;
+  name: string;
+  description: string;
+  hour: string;
+}
+
+export interface IHistorySection {
+  title: string;
+  data: IHistory[];
+  createdAt?: Date;
+  updatedAt?: Date | null;
 }
 
 export interface IUserWithId extends IUser {

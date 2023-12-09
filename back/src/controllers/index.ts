@@ -17,6 +17,8 @@ import {
   getVideoById,
 } from './videos';
 
+import { createHistory, getAllHistorys } from './history';
+
 export default {
   login,
   createUser,
@@ -31,4 +33,6 @@ export default {
   getImageByName,
   updateVideo,
   getVideoById,
+  createHistory,
+  getAllHistorys,
 };
