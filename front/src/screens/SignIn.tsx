@@ -1,7 +1,19 @@
 import { useEffect, useState } from 'react';
-import { VStack, Image, Center, Text, Heading, Pressable, Icon, ScrollView } from 'native-base';
+import {
+  VStack,
+  Image,
+  Center,
+  Text,
+  Heading,
+  Pressable,
+  Icon,
+  ScrollView,
+  useToast,
+} from 'native-base';
+import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import { type AuthRoutesNavigationProps } from '@routes/auth.routes';
+// import { type AppRoutesNavigationProps } from '@routes/app.routes';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import Input from '@components/Input';
@@ -9,6 +21,7 @@ import EyeOpenSvg from '@assets/eye-open.svg';
 import EyeCloseSvg from '@assets/eye-closed.svg';
 import EmailSvg from '@assets/email.svg';
 import Button from '@components/Button';
+import { login } from '@utils/index';
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -16,10 +29,30 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [disabled, setDisabled] = useState(true);
 
-  const navigation = useNavigation<AuthRoutesNavigationProps>();
+  const toast = useToast();
+  const navigationAuth = useNavigation<AuthRoutesNavigationProps>();
+  // const navigationApp = useNavigation<AppRoutesNavigationProps>();
 
-  const redirect = () => {
-    navigation.navigate('signUp');
+  const redirect = async () => {
+    navigationAuth.navigate('signUp');
+  };
+
+  const handleLogin = async () => {
+    const result = await login({ email, password });
+    if ('error' in result) {
+      toast.closeAll();
+      toast.show({
+        title: 'Atenção',
+        description: result.error,
+        placement: 'top',
+        bgColor: 'red.500',
+      });
+    } else {
+      const { token, id } = result;
+      await SecureStore.setItemAsync('token', token ?? '');
+      await SecureStore.setItemAsync('userId', id ?? '');
+      // navigationApp.navigate('home');
+    }
   };
 
   const validationFields = () => {
@@ -33,7 +66,10 @@ function SignIn() {
   useEffect(validationFields, [email, password]);
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      showsVerticalScrollIndicator={false}
+    >
       <VStack flex={1}>
         <Image
           source={BackgroundImg}
@@ -81,7 +117,7 @@ function SignIn() {
               </Pressable>
             }
           />
-          <Button name="Acessar" disabled={disabled} />
+          <Button name="Acessar" disabled={disabled} onPress={handleLogin} />
         </Center>
         <Center w="80%" mx="auto" mt="24">
           <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">

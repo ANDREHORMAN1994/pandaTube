@@ -1,13 +1,22 @@
-import { VStack, Image, Center, Text, Heading, ScrollView } from 'native-base';
+import {
+  VStack,
+  Image,
+  Center,
+  Text,
+  Heading,
+  ScrollView,
+  useToast,
+} from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import { type AuthRoutesNavigationProps } from '@routes/auth.routes';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup';
 import BackgroundImg from '@assets/background.png';
 import LogoSvg from '@assets/logo.svg';
 import Input from '@components/Input';
 import Button from '@components/Button';
+import { createUser } from '@utils/index';
 
 type FormProps = {
   name: string;
@@ -17,15 +26,17 @@ type FormProps = {
 };
 
 const schema = yup.object({
-  name: yup.string()
-    .required('Campo obrigatório! Informe o seu nome'),
-  email: yup.string()
+  name: yup.string().required('Campo obrigatório! Informe o seu nome'),
+  email: yup
+    .string()
     .required('Campo obrigatório! Informe o seu e-mail')
     .email('E-mail inválido'),
-  password: yup.string()
+  password: yup
+    .string()
     .required('Campo obrigatório! Informe a sua senha')
     .min(6, 'A senha deve ter no mínimo 6 caracteres'),
-  newPassword: yup.string()
+  newPassword: yup
+    .string()
     .required('Campo obrigatório! Confirme a sua senha')
     .min(6, 'A senha deve ter no mínimo 6 caracteres')
     .oneOf([yup.ref('password'), ''], 'As senhas não são iguais'),
@@ -33,7 +44,11 @@ const schema = yup.object({
 
 function SignUp() {
   const navigation = useNavigation<AuthRoutesNavigationProps>();
-  const { control, handleSubmit, formState: { errors, isValid } } = useForm<FormProps>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<FormProps>({
     defaultValues: {
       name: '',
       email: '',
@@ -43,24 +58,40 @@ function SignUp() {
     resolver: yupResolver(schema),
   });
 
+  const toast = useToast();
 
   const redirect = () => {
     navigation.goBack();
   };
 
-  const validationFields = (data: FormProps) => {
-    console.log(data);
-    // if (!name || !email || !password || !newPassword) {
-    //   return Alert.alert('Preencha todos os campos');
-    // }
-    // if (password !== newPassword) {
-    //   return Alert.alert('As senhas não são iguais');
-    // }
-    // return Alert.alert('Cadastro realizado com sucesso');
-  }
+  const validationFields = async ({ name, email, newPassword }: FormProps) => {
+    const infos = { name, email, password: newPassword };
+    const result = await createUser(infos);
+    if ('error' in result) {
+      toast.closeAll();
+      toast.show({
+        title: 'Atenção',
+        description: result.error,
+        placement: 'top',
+        bgColor: 'red.500',
+      });
+    } else {
+      toast.closeAll();
+      toast.show({
+        title: 'Sucesso',
+        description: 'Usuário criado com sucesso!',
+        placement: 'top',
+        bgColor: 'green.500',
+      });
+      navigation.goBack();
+    }
+  };
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      showsVerticalScrollIndicator={false}
+    >
       <VStack flex={1}>
         <Image
           source={BackgroundImg}
@@ -146,7 +177,11 @@ function SignUp() {
           />
         </Center>
         <Center w="80%" mx="auto" mt={16}>
-          <Button name="Voltar para o login" variant="outline" onPress={redirect} />
+          <Button
+            name="Voltar para o login"
+            variant="outline"
+            onPress={redirect}
+          />
         </Center>
       </VStack>
     </ScrollView>

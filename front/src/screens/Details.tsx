@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { HStack, Heading, Icon, Text, VStack } from 'native-base';
+import { HStack, Heading, Icon, Text, VStack, useToast } from 'native-base';
+import * as SecureStore from 'expo-secure-store';
 import { TouchableOpacity } from 'react-native';
 import {
   useNavigation,
@@ -30,16 +31,38 @@ function Details() {
     params: { id },
   } = useRoute<DetailsScreenRouteProp>();
 
+  const toast = useToast();
   const navigation = useNavigation<AppRoutesNavigationProps>();
 
   const redirect = () => {
     navigation.goBack();
   };
 
+  const getToken = async () => {
+    const token = await SecureStore.getItemAsync('token');
+    return token;
+  };
+
+  const showToast = useRef((message: string) => {
+    toast.closeAll();
+    toast.show({
+      title: 'Atenção',
+      description: message,
+      placement: 'top',
+      bgColor: 'red.500',
+    });
+  });
+
   useEffect(() => {
     const request = async () => {
-      const video = await getVideoById(id);
-      setMovie(video);
+      const token = (await getToken()) ?? '';
+      // if (!token) return navigation.navigate('home');
+      const video = await getVideoById(id, token);
+      if ('error' in video) {
+        showToast.current(video.error);
+      } else {
+        setMovie(video);
+      }
     };
 
     request();

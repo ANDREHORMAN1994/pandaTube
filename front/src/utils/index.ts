@@ -1,49 +1,99 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import { type IMovie } from 'src/types';
+import { type IUser, type IMovie, type IError } from 'src/types';
 
 const BASE_EP = 'http://10.0.2.2:3001';
 
-export const getAllVideos = async (): Promise<IMovie[]> => {
+export const login = async (infoUser: IUser): Promise<IUser | IError> => {
+  const options = {
+    method: 'POST',
+    url: `${BASE_EP}/login`,
+    data: infoUser,
+  };
+
+  return axios
+    .request(options)
+    .then((response: any) => response.data)
+    .catch((error: any) => error.response.data);
+};
+
+export const createUser = async (infoUser: IUser): Promise<IUser | IError> => {
+  const options = {
+    method: 'POST',
+    url: `${BASE_EP}/user`,
+    data: infoUser,
+  };
+
+  return axios
+    .request(options)
+    .then((response: any) => response.data)
+    .catch((error: any) => error.response.data);
+};
+
+export const updateUserById = async (id: string, infoUser: IUser, token: string): Promise<IUser | IError> => {
+  const options = {
+    method: 'GET',
+    url: `${BASE_EP}/users/${id}`,
+    data: infoUser,
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  return axios
+    .request(options)
+    .then((response: any) => response.data)
+    .catch((error: any) => error.response.data);
+};
+
+export const getUserById = async (id: string, token: string): Promise<IUser | IError> => {
+  const options = {
+    method: 'GET',
+    url: `${BASE_EP}/users/${id}`,
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  return axios
+    .request(options)
+    .then((response: any) => response.data)
+    .catch((error: any) => error.response.data);
+};
+
+export const getAllVideos = async (token: string): Promise<IMovie[] | IError> => {
   const options = {
     method: 'GET',
     url: `${BASE_EP}/videos`,
+    headers: { Authorization: `Bearer ${token}` },
   };
 
   return axios
     .request(options)
     .then((response: any) => response.data)
-    .catch((error: any) => {
-      console.log(error);
-    });
+    .catch((error: any) => error.response.data);
 };
 
-export const getVideoById = async (id: string): Promise<IMovie> => {
+export const getVideoById = async (id: string, token: string): Promise<IMovie | IError> => {
   const options = {
     method: 'GET',
     url: `${BASE_EP}/videos/${id}`,
+    headers: { Authorization: `Bearer ${token}` },
   };
 
   return axios
     .request(options)
     .then((response: any) => response.data)
-    .catch((error: any) => {
-      console.log(error);
-    });
+    .catch((error: any) => error.response.data);
 };
 
-export const downloadVideo = async (id: string): Promise<{ message: string }> => {
+export const downloadVideo = async (id: string,token: string): Promise<{ message: string } | IError> => {
   const options = {
     method: 'GET',
     url: `${BASE_EP}/videos/download/${id}`,
+    headers: { Authorization: `Bearer ${token}` },
   };
 
   return axios
     .request(options)
     .then((response: any) => response.data)
-    .catch((error: any) => {
-      console.log(error);
-    });
+    .catch((error: any) => error.response.data);
 };
 
 export const getVideoFile = (name: string): string => {

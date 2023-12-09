@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
-import { HStack, VStack, FlatList, Heading, Text } from 'native-base';
+import { useEffect, useRef, useState } from 'react';
+import { HStack, VStack, FlatList, Heading, Text, useToast } from 'native-base';
+import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
 import { type AppRoutesNavigationProps } from '@routes/app.routes';
 import GroupCategories from '@components/GroupCategories';
@@ -16,27 +17,51 @@ function Home() {
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [movies, setMovies] = useState<IMovie[]>([]);
 
+  const toast = useToast();
   const navigation = useNavigation<AppRoutesNavigationProps>();
 
   const redirect = (id: string) => {
     navigation.navigate('details', { id });
-  }
+  };
+
+  const getToken = async () => {
+    const token = await SecureStore.getItemAsync('token');
+    return token;
+  };
+
+  const showToast = useRef((message: string) => {
+    toast.closeAll();
+    toast.show({
+      title: 'Atenção',
+      description: message,
+      placement: 'top',
+      bgColor: 'red.500',
+    });
+  });
 
   useEffect(() => {
     const request = async () => {
-      const videos = await getAllVideos();
-      await Promise.all(videos.map(async ({ videoPlayerId }) => {
-        if (!videoPlayerId) return;
-        await downloadVideo(videoPlayerId);
-      }));
+      const token = (await getToken()) ?? '';
+      // if (!token) return navigation.navigate('home');
+      const videos = await getAllVideos(token);
+      if ('error' in videos) {
+        showToast.current(videos.error);
+      } else {
+        await Promise.all(
+          videos.map(async ({ videoPlayerId }) => {
+            if (!videoPlayerId) return;
+            await downloadVideo(videoPlayerId, token);
+          })
+        );
 
-      setCategories(CATEGORIES_LIST);
-      setActiveCategory(CATEGORIES_LIST[0]);
-      setMovies(videos);
+        setCategories(CATEGORIES_LIST);
+        setActiveCategory(CATEGORIES_LIST[0]);
+        setMovies(videos);
+      }
     };
 
     request();
-  }, []);
+  }, [showToast]);
 
   if (!categories.length) return <Loading />;
 
@@ -69,13 +94,14 @@ function Home() {
           </Text>
         </HStack>
         <FlatList
-          data={movies
-            .filter(({description}) => {
-              if (activeCategory === 'todos') return true;
-              return description.toLowerCase().includes(activeCategory.toLowerCase());
-            })}
+          data={movies.filter(({ description }) => {
+            if (activeCategory === 'todos') return true;
+            return description
+              .toLowerCase()
+              .includes(activeCategory.toLowerCase());
+          })}
           keyExtractor={(item: IMovie) => item.id}
-          renderItem={({ item: {id, name, description, imgUri } }) => (
+          renderItem={({ item: { id, name, description, imgUri } }) => (
             <VideoCard
               name={name}
               description={description}

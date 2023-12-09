@@ -3,7 +3,9 @@ import { IUser } from '../types';
 
 export const createUser = async (user: IUser) => {
   const collection = admin.firestore().collection('users');
-  const existUserEmail = await collection.where('email', '==', user.email).get();
+  const existUserEmail = await collection
+    .where('email', '==', user.email)
+    .get();
   if (existUserEmail.empty) {
     const { id } = await collection.add(user);
     return {
@@ -16,7 +18,9 @@ export const createUser = async (user: IUser) => {
 
 export const login = async (user: IUser) => {
   const collection = admin.firestore().collection('users');
-  const existUserEmail = await collection.where('email', '==', user.email).get();
+  const existUserEmail = await collection
+    .where('email', '==', user.email)
+    .get();
   if (existUserEmail.empty) {
     return null;
   }
@@ -26,14 +30,14 @@ export const login = async (user: IUser) => {
 export const getUserById = async (id: string) => {
   const collection = admin.firestore().collection('users');
   const result = await collection.doc(id).get();
-  if (result.exists) return result.data();
+  if (result.exists) return { id: result.id, ...result.data() };
   return null;
 };
 
 export const getAllUser = async () => {
   const collection = admin.firestore().collection('users');
   const result = await collection.get();
-  if (collection) return result.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  if (collection) { return result.docs.map((doc) => ({ id: doc.id, ...doc.data() })); }
   return null;
 };
 
