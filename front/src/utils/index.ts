@@ -46,7 +46,7 @@ export const createHistory = async (infoHistory: IHistorySection, token: string)
 
 export const updateUserById = async (id: string, infoUser: IUser, token: string): Promise<IUser | IError> => {
   const options = {
-    method: 'GET',
+    method: 'PATCH',
     url: `${BASE_EP}/users/${id}`,
     data: infoUser,
     headers: { Authorization: `Bearer ${token}` },

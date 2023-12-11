@@ -33,6 +33,8 @@
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-floating-promises": "off",
     "consistent-return": "off",
-    "@typescript-eslint/no-non-null-assertion": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "array-callback-return": "off"
   }
 }

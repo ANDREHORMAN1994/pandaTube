@@ -1,5 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
-import { Center, ScrollView, VStack, Skeleton, Text, Heading, useToast } from 'native-base';
+import { useContext, useEffect, useRef, useState } from 'react';
+import {
+  Center,
+  ScrollView,
+  VStack,
+  Skeleton,
+  Text,
+  Heading,
+  useToast,
+} from 'native-base';
 import Title from '@components/Title';
 import UserPhoto from '@components/UserPhoto';
 import { TouchableOpacity } from 'react-native';
@@ -14,6 +22,7 @@ import Button from '@components/Button';
 import { getUserById, updateUserById } from '@utils/index';
 import { type IUser } from 'src/types';
 import PhotoDefaultPng from '../assets/userPhotoDefault.png';
+import { AuthContext } from '../context/Provider';
 
 const PHOTO_SIZE = 33;
 
@@ -42,7 +51,6 @@ const schema = yup.object({
 });
 
 function Profile() {
-  const [imgPerfil, setImgPerfil] = useState('');
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -60,6 +68,7 @@ function Profile() {
     resolver: yupResolver(schema),
   });
 
+  const { setIsAuth, imgPerfil, setImgPerfil } = useContext(AuthContext);
   const toast = useToast();
 
   const showToast = useRef((message: string) => {
@@ -86,8 +95,8 @@ function Profile() {
     const request = async () => {
       const token = (await getToken()) ?? '';
       const id = (await getUserId()) ?? '';
-      // if (!token) return navigation.navigate('home');
-      // if (!id) return showToast.current('Usuário não encontrado');
+      if (!token) return setIsAuth(false);
+      if (!id) return showToast.current('Usuário não encontrado');
       const userInfo = await getUserById(id, token);
       if ('error' in userInfo) {
         showToast.current(userInfo.error);
@@ -97,7 +106,7 @@ function Profile() {
     };
 
     request();
-  }, []);
+  }, [setIsAuth]);
 
   const handlePhotoSelect = async () => {
     try {
@@ -114,7 +123,7 @@ function Profile() {
 
         const info = await FileSystem.getInfoAsync(uri);
 
-        if (info?.exists && (Number(info.size) / 1024 / 1024) > 5) {
+        if (info?.exists && Number(info.size) / 1024 / 1024 > 5) {
           throw new Error('A imagem não pode ser maior que 5MB');
         }
 
@@ -128,6 +137,7 @@ function Profile() {
   };
 
   const validationFields = async ({ name, email, newPassword }: FormProps) => {
+    setIsLoading(true);
     const infos = { name, email, password: newPassword };
     const token = (await getToken()) ?? '';
     const id = user?.id ?? '';
@@ -140,6 +150,7 @@ function Profile() {
         placement: 'top',
         bgColor: 'red.500',
       });
+      setIsLoading(false);
     } else {
       toast.closeAll();
       toast.show({
@@ -148,6 +159,7 @@ function Profile() {
         placement: 'top',
         bgColor: 'green.500',
       });
+      setIsLoading(false);
     }
   };
 
@@ -174,7 +186,7 @@ function Profile() {
             />
           ) : (
             <UserPhoto
-              source={ imgPerfil ? { uri: imgPerfil } : PhotoDefaultPng}
+              source={imgPerfil ? { uri: imgPerfil } : PhotoDefaultPng}
               defaultSource={PhotoDefaultPng}
               size={PHOTO_SIZE}
               alt="Foto do usuário"
@@ -182,7 +194,13 @@ function Profile() {
             />
           )}
           <TouchableOpacity onPress={handlePhotoSelect}>
-            <Text color="green.500" fontSize="md" fontWeight="bold" mt={2} mb={8}>
+            <Text
+              color="green.500"
+              fontSize="md"
+              fontWeight="bold"
+              mt={2}
+              mb={8}
+            >
               Alterar foto
             </Text>
           </TouchableOpacity>
@@ -193,9 +211,9 @@ function Profile() {
             render={({ field: { onChange, value } }) => (
               <Input
                 type="text"
-                placeholder="Nome"
+                placeholder={user?.name ?? "Nome"}
                 onChangeText={onChange}
-                value={value || user?.name}
+                value={value}
                 messageError={errors.name?.message}
                 bg="gray.600"
               />
@@ -207,11 +225,11 @@ function Profile() {
             render={({ field: { onChange, value } }) => (
               <Input
                 type="text"
-                placeholder="E-mail"
+                placeholder={user?.email ?? "E-mail"}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 onChangeText={onChange}
-                value={value || user?.email}
+                value={value}
                 messageError={errors.email?.message}
                 bg="gray.600"
               />
@@ -230,7 +248,7 @@ function Profile() {
             render={({ field: { onChange, value } }) => (
               <Input
                 type="password"
-                placeholder="Senha antiga"
+                placeholder="Nova senha"
                 onChangeText={onChange}
                 value={value}
                 secureTextEntry
@@ -245,7 +263,7 @@ function Profile() {
             render={({ field: { onChange, value } }) => (
               <Input
                 type="password"
-                placeholder="Nova senha"
+                placeholder="Confirmar nova senha"
                 onChangeText={onChange}
                 value={value}
                 messageError={errors.newPassword?.message}
@@ -256,7 +274,12 @@ function Profile() {
               />
             )}
           />
-          <Button name="Atualizar" mt={4} onPress={handleSubmit(validationFields)} />
+          <Button
+            name="Atualizar"
+            mt={4}
+            onPress={handleSubmit(validationFields)}
+            isLoading={isLoading}
+          />
         </VStack>
       </ScrollView>
     </VStack>

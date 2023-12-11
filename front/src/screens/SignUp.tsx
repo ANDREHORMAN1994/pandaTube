@@ -17,6 +17,7 @@ import LogoSvg from '@assets/logo.svg';
 import Input from '@components/Input';
 import Button from '@components/Button';
 import { createUser } from '@utils/index';
+import { useState } from 'react';
 
 type FormProps = {
   name: string;
@@ -43,6 +44,7 @@ const schema = yup.object({
 });
 
 function SignUp() {
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation<AuthRoutesNavigationProps>();
   const {
     control,
@@ -65,6 +67,7 @@ function SignUp() {
   };
 
   const validationFields = async ({ name, email, newPassword }: FormProps) => {
+    setLoading(true);
     const infos = { name, email, password: newPassword };
     const result = await createUser(infos);
     if ('error' in result) {
@@ -75,6 +78,7 @@ function SignUp() {
         placement: 'top',
         bgColor: 'red.500',
       });
+      setLoading(false);
     } else {
       toast.closeAll();
       toast.show({
@@ -83,6 +87,7 @@ function SignUp() {
         placement: 'top',
         bgColor: 'green.500',
       });
+      setLoading(false);
       navigation.goBack();
     }
   };
@@ -174,6 +179,7 @@ function SignUp() {
             name="Criar e acessar"
             onPress={handleSubmit(validationFields)}
             disabled={!isValid}
+            isLoading={loading}
           />
         </Center>
         <Center w="80%" mx="auto" mt={16}>

@@ -24,7 +24,7 @@ export const login = async (user: IUser) => {
   if (existUserEmail.empty) {
     return null;
   }
-  return existUserEmail.docs[0].data();
+  return existUserEmail.docs.map((doc) => ({ id: doc.id, ...doc.data() }))[0];
 };
 
 export const getUserById = async (id: string) => {

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Heading, VStack, SectionList, Text, useToast } from 'native-base';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigationState } from '@react-navigation/native';
@@ -6,10 +6,12 @@ import HistoryCard from '@components/HistoryCard';
 import Title from '@components/Title';
 import { type IHistorySection } from 'src/types';
 import { getAllHistory } from '@utils/index';
+import { AuthContext } from '../context/Provider';
 
 function History() {
   const [historyList, setHistoryList] = useState<IHistorySection[]>([]);
 
+  const { setIsAuth } = useContext(AuthContext);
   const toast = useToast();
   const { routeNames, index } = useNavigationState(state => state);
   const route = routeNames[index];
@@ -32,19 +34,24 @@ function History() {
   useEffect(() => {
     const request = async () => {
       const token = (await getToken()) ?? '';
-      // if (!token) return navigation.navigate('home');
+      if (!token) return setIsAuth(false);
       const history = await getAllHistory(token);
       if ('error' in history) {
         showToast.current(history.error);
       } else {
-        setHistoryList(history);
+        const sortHistory = [...history].sort((a, b): number => {
+          if (a?.title > b?.title) return -1;
+          if (a?.title < b?.title) return 1;
+          return 0;
+        });
+        setHistoryList(sortHistory);
       }
     };
 
     if (route === 'history') {
       request();
     }
-  }, [route]);
+  }, [route, setIsAuth]);
 
   return (
     <VStack>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { HStack, VStack, FlatList, Heading, Text, useToast } from 'native-base';
 import * as SecureStore from 'expo-secure-store';
 import { useNavigation } from '@react-navigation/native';
@@ -7,8 +7,9 @@ import GroupCategories from '@components/GroupCategories';
 import HomeHeader from '@components/HomeHeader';
 import Loading from '@components/Loading';
 import VideoCard from '@components/VideoCard';
-import { downloadVideo, getAllVideos } from '@utils/index';
-import { type IMovie } from 'src/types';
+import { downloadVideo, getAllVideos, getUserById } from '@utils/index';
+import { type IUser, type IMovie } from 'src/types';
+import { AuthContext } from '../context/Provider';
 
 const CATEGORIES_LIST = ['todos', 'ação', 'terror', 'anime', 'comédia'];
 
@@ -16,7 +17,9 @@ function Home() {
   const [categories, setCategories] = useState<string[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [movies, setMovies] = useState<IMovie[]>([]);
+  const [user, setUser] = useState<IUser | null>(null);
 
+  const { setIsAuth } = useContext(AuthContext);
   const toast = useToast();
   const navigation = useNavigation<AppRoutesNavigationProps>();
 
@@ -39,10 +42,22 @@ function Home() {
     });
   });
 
+  const getUserId = async () => {
+    const userId = await SecureStore.getItemAsync('userId');
+    return userId;
+  };
+
   useEffect(() => {
     const request = async () => {
       const token = (await getToken()) ?? '';
-      // if (!token) return navigation.navigate('home');
+      const id = (await getUserId()) ?? '';
+      if (!token) return setIsAuth(false);
+      if (id) {
+        const userInfo = await getUserById(id, token);
+        if ('name' in userInfo) {
+          setUser(userInfo);
+        }
+      }
       const videos = await getAllVideos(token);
       if ('error' in videos) {
         showToast.current(videos.error);
@@ -61,13 +76,13 @@ function Home() {
     };
 
     request();
-  }, [showToast]);
+  }, [setIsAuth, showToast]);
 
   if (!categories.length) return <Loading />;
 
   return (
     <VStack flex={1}>
-      <HomeHeader />
+      <HomeHeader user={user} setIsAuth={setIsAuth} />
       <HStack my={8}>
         <FlatList
           horizontal

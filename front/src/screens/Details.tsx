@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { HStack, Heading, Icon, Text, VStack, useToast } from 'native-base';
 import * as SecureStore from 'expo-secure-store';
@@ -17,6 +17,7 @@ import VideoWeb from '@components/VideoWeb';
 import Loading from '@components/Loading';
 import { createHistory, getVideoById } from '@utils/index';
 import { type IHistorySection, type IMovie } from 'src/types';
+import { AuthContext } from '../context/Provider';
 
 type StackParamList = {
   Details: {
@@ -29,6 +30,8 @@ type DetailsScreenRouteProp = RouteProp<StackParamList, 'Details'>;
 function Details() {
   const [movie, setMovie] = useState<IMovie | null>(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
+
+  const { setIsAuth } = useContext(AuthContext);
   const {
     params: { id },
   } = useRoute<DetailsScreenRouteProp>();
@@ -60,7 +63,7 @@ function Details() {
   useEffect(() => {
     const request = async () => {
       const token = (await getToken()) ?? '';
-      // if (!token) return navigation.navigate('home');
+      if (!token) return setIsAuth(false);
       const video = await getVideoById(id, token);
       if ('error' in video) {
         showToast.current(video.error);
@@ -85,7 +88,7 @@ function Details() {
     if (route === 'details') {
       request();
     }
-  }, [id, route]);
+  }, [id, route, setIsAuth]);
 
   useEffect(() => {
     if (route !== 'details') {
