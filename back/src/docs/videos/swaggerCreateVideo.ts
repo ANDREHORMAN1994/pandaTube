@@ -17,18 +17,7 @@ const swaggerCreateVideo = (controller: ControllerFunction) => {
       description: 'Informações para criar um novo vídeo.',
       required: true,
       type: 'object',
-      schema: {
-        infos: {
-          name: 'Top Gang 2',
-          categorie: 'comédia',
-          sinopse: 'Filme de comédia muito engraçado.',
-          description: '1993 ‧ Comédia/Ação ‧ 1h 26m',
-        }
-        img: {
-          type: 'string',
-          format: 'binary',
-        },
-      }
+      schema: { $ref: '#/definitions/NewVideoBody' }
     }
   */
 

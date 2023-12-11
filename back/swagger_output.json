@@ -41,6 +41,17 @@
           "Videos"
         ],
         "description": "Criar um novo vídeo com os dados fornecidos no corpo da requisição.",
+        "parameters": [
+          {
+            "name": "New Video",
+            "in": "body",
+            "description": "Informações para criar um novo vídeo.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewVideoBody"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Vídeo criado com sucesso.",
@@ -212,6 +223,15 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "New Video",
+            "in": "body",
+            "description": "Novas informações relacionadas ao vídeo.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewVideoBody"
+            }
           }
         ],
         "responses": {
@@ -1149,6 +1169,49 @@
         "categorie",
         "sinopse",
         "description"
+      ]
+    },
+    "NewVideoBody": {
+      "type": "object",
+      "properties": {
+        "infos": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Top Gang 2"
+            },
+            "categorie": {
+              "type": "string",
+              "example": "comédia"
+            },
+            "sinopse": {
+              "type": "string",
+              "example": "Filme de comédia muito engraçado."
+            },
+            "description": {
+              "type": "string",
+              "example": "1993 ‧ Comédia/Ação ‧ 1h 26m"
+            }
+          }
+        },
+        "img": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "string"
+            },
+            "format": {
+              "type": "string",
+              "example": "binary"
+            }
+          }
+        }
+      },
+      "required": [
+        "infos",
+        "img"
       ]
     }
   }

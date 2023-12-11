@@ -53,6 +53,18 @@ const DOC = {
       createdAt: '2021-06-21T18:30:09.000Z',
       updatedAt: '2021-06-21T18:30:09.000Z',
     },
+    NewVideoBody: {
+      $infos: {
+        name: 'Top Gang 2',
+        categorie: 'comédia',
+        sinopse: 'Filme de comédia muito engraçado.',
+        description: '1993 ‧ Comédia/Ação ‧ 1h 26m',
+      },
+      $img: {
+        type: 'string',
+        format: 'binary',
+      },
+    },
   },
 };
 
