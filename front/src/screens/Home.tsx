@@ -8,9 +8,11 @@ import HomeHeader from '@components/HomeHeader';
 import Loading from '@components/Loading';
 import VideoCard from '@components/VideoCard';
 import { downloadVideo, getAllVideos, getUserById } from '@utils/index';
+import { API_URL } from '@env';
 import { type IUser, type IMovie } from 'src/types';
 import { AuthContext } from '../context/Provider';
 
+const BASE_EP = API_URL ?? 'http://10.0.2.2:3001';
 const CATEGORIES_LIST = ['todos', 'ação', 'terror', 'anime', 'comédia'];
 
 function Home() {
@@ -120,7 +122,7 @@ function Home() {
             <VideoCard
               name={name}
               description={description}
-              imgUri={imgUri?.replace('localhost', '10.0.2.2') ?? ''}
+              imgUri={imgUri?.replace('http://localhost:3001', BASE_EP) ?? ''}
               onPress={() => redirect(id)}
             />
           )}
