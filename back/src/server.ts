@@ -11,6 +11,7 @@ import { ICustomError } from './types';
 import connectToFireStore from './models/connect';
 
 dotenv.config();
+connectToFireStore();
 
 const CDN_SWAGGER_UI = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css';
 const PORT = process.env.PORT || 3001;
@@ -21,7 +22,6 @@ const CORS_OPTIONS = {
 };
 
 const app = express();
-
 app.use(cors(CORS_OPTIONS));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
@@ -54,5 +54,4 @@ app.use(
 
 app.listen(PORT, () => {
   console.log(`Rodando na porta: ${PORT}\nAcesse: ${URL}/`);
-  connectToFireStore();
 });
