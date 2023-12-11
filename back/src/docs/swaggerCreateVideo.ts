@@ -1,20 +1,20 @@
-import { ControllerFunction } from '../../types';
+import { ControllerFunction } from '../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerUpdateVideoById = (controller: ControllerFunction) => {
+const swaggerCreateVideo = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/video/{id}'
-    #swagger.method = 'patch'
+    #swagger.path = '/video'
+    #swagger.method = 'post'
     #swagger.tags = ['Videos']
-    #swagger.description = 'Retornar um vídeo atualizado com o ID especificado.'
+    #swagger.description = 'Criar um novo vídeo com os dados fornecidos no corpo da requisição.'
   */
 
   /*
     #swagger.parameters['New Video'] = {
       in: 'body',
-      description: 'Novas informações relacionadas ao vídeo.',
+      description: 'Informações para criar um novo vídeo.',
       required: true,
       type: 'object',
       schema: { $ref: '#/definitions/NewVideoBody' }
@@ -23,26 +23,19 @@ const swaggerUpdateVideoById = (controller: ControllerFunction) => {
 
   /*
     #swagger.security = [{
-      apiKeyAuth: []
+      "apiKeyAuth": []
     }]
   */
 
   /*
-    #swagger.responses[200] = {
-      description: 'Vídeo atualizado com sucesso.',
+    #swagger.responses[201] = {
+      description: 'Vídeo criado com sucesso.',
       schema: { $ref: '#/definitions/Video' }
     }
   */
 
   /*
-    #swagger.responses[400-1] = {
-      description: 'Bad Request.',
-      schema: { message: 'ID inválido ou faltando.' }
-    }
-  */
-
-  /*
-    #swagger.responses[400-2] = {
+    #swagger.responses[400] = {
       description: 'Bad Request.',
       schema: { message: 'Campos inválidos ou faltando.' }
     }
@@ -63,9 +56,9 @@ const swaggerUpdateVideoById = (controller: ControllerFunction) => {
   */
 
   /*
-    #swagger.responses[404] = {
-      description: 'Not Found.',
-      schema: { message: 'Nenhum vídeo cadastrado com esse ID.' }
+    #swagger.responses[500] = {
+      description: 'Internal Server Error.',
+      schema: { message: 'Erro interno ao tentar criar um vídeo.' }
     }
   */
 
@@ -73,4 +66,4 @@ const swaggerUpdateVideoById = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerUpdateVideoById;
+export default swaggerCreateVideo;

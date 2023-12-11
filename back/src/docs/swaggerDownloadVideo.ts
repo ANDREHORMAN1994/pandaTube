@@ -1,14 +1,14 @@
-import { ControllerFunction } from '../../types';
+import { ControllerFunction } from '../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerGetUserById = (controller: ControllerFunction) => {
+const swaggerDownloadVideo = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/users/{id}'
+    #swagger.path = '/videos/download/{id}'
     #swagger.method = 'get'
-    #swagger.tags = ['Users']
-    #swagger.description = 'Retornar um usuário com o ID especificado.'
+    #swagger.tags = ['Videos']
+    #swagger.description = 'Realiza o Download do vídeo com o id passado como parâmetro.'
   */
 
   /*
@@ -19,15 +19,8 @@ const swaggerGetUserById = (controller: ControllerFunction) => {
 
   /*
     #swagger.responses[200] = {
-      description: 'Usuário encontrado com sucesso.',
-      schema: { $ref: '#/definitions/User' }
-    }
-  */
-
-  /*
-    #swagger.responses[400] = {
-      description: 'Bad Request.',
-      schema: { message: 'ID inválido ou faltando.' }
+      description: 'Download concluído com sucesso',
+      schema: { message: 'Download concluído com sucesso' }
     }
   */
 
@@ -48,7 +41,7 @@ const swaggerGetUserById = (controller: ControllerFunction) => {
   /*
     #swagger.responses[500] = {
       description: 'Internal Server Error.',
-      schema: { message: 'Erro interno ao tentar encontrar o usuário pelo id.' }
+      schema: { message: 'Erro interno ao tentar acessar todos os vídeos.' }
     }
   */
 
@@ -56,4 +49,4 @@ const swaggerGetUserById = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerGetUserById;
+export default swaggerDownloadVideo;

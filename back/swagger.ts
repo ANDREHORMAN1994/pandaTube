@@ -6,7 +6,7 @@ dotenv.config();
 
 const URL = process.env.BASE_URL || 'http://localhost:3001';
 const OUTPUTFILE = './swagger_output.json';
-const ENDPOINTSFILES = ['./src/docs/*.ts', './src/docs/videos/*.ts', './src/docs/users/*.ts'];
+const ENDPOINTSFILES = ['./src/docs/*.ts'];
 
 const DOC = {
   info: {

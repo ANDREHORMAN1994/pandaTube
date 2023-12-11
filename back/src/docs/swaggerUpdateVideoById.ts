@@ -1,20 +1,20 @@
-import { ControllerFunction } from '../../types';
+import { ControllerFunction } from '../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerCreateVideo = (controller: ControllerFunction) => {
+const swaggerUpdateVideoById = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/video'
-    #swagger.method = 'post'
+    #swagger.path = '/video/{id}'
+    #swagger.method = 'patch'
     #swagger.tags = ['Videos']
-    #swagger.description = 'Criar um novo vídeo com os dados fornecidos no corpo da requisição.'
+    #swagger.description = 'Retornar um vídeo atualizado com o ID especificado.'
   */
 
   /*
     #swagger.parameters['New Video'] = {
       in: 'body',
-      description: 'Informações para criar um novo vídeo.',
+      description: 'Novas informações relacionadas ao vídeo.',
       required: true,
       type: 'object',
       schema: { $ref: '#/definitions/NewVideoBody' }
@@ -23,19 +23,26 @@ const swaggerCreateVideo = (controller: ControllerFunction) => {
 
   /*
     #swagger.security = [{
-      "apiKeyAuth": []
+      apiKeyAuth: []
     }]
   */
 
   /*
-    #swagger.responses[201] = {
-      description: 'Vídeo criado com sucesso.',
+    #swagger.responses[200] = {
+      description: 'Vídeo atualizado com sucesso.',
       schema: { $ref: '#/definitions/Video' }
     }
   */
 
   /*
-    #swagger.responses[400] = {
+    #swagger.responses[400-1] = {
+      description: 'Bad Request.',
+      schema: { message: 'ID inválido ou faltando.' }
+    }
+  */
+
+  /*
+    #swagger.responses[400-2] = {
       description: 'Bad Request.',
       schema: { message: 'Campos inválidos ou faltando.' }
     }
@@ -56,9 +63,9 @@ const swaggerCreateVideo = (controller: ControllerFunction) => {
   */
 
   /*
-    #swagger.responses[500] = {
-      description: 'Internal Server Error.',
-      schema: { message: 'Erro interno ao tentar criar um vídeo.' }
+    #swagger.responses[404] = {
+      description: 'Not Found.',
+      schema: { message: 'Nenhum vídeo cadastrado com esse ID.' }
     }
   */
 
@@ -66,4 +73,4 @@ const swaggerCreateVideo = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerCreateVideo;
+export default swaggerUpdateVideoById;

@@ -1,25 +1,25 @@
-import { ControllerFunction } from '../../types';
+import { ControllerFunction } from '../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerDeleteVideoById = (controller: ControllerFunction) => {
+const swaggerDeleteUserById = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/video/{id}'
+    #swagger.path = '/users/{id}'
     #swagger.method = 'delete'
-    #swagger.tags = ['Videos']
-    #swagger.description = 'Deletar um vídeo identificado pelo ID fornecido na rota.'
+    #swagger.tags = ['Users']
+    #swagger.description = 'Deletar um usuário identificado pelo ID fornecido na rota.'
   */
 
   /*
     #swagger.security = [{
-      apiKeyAuth: []
+      "apiKeyAuth": []
     }]
   */
 
   /*
     #swagger.responses[204] = {
-      description: 'Vídeo deletado com sucesso.'
+      description: 'Usuário deletado com sucesso.'
     }
   */
 
@@ -47,7 +47,7 @@ const swaggerDeleteVideoById = (controller: ControllerFunction) => {
   /*
     #swagger.responses[404] = {
       description: 'Not Found.',
-      schema: { message: 'Nenhum vídeo cadastrado com esse ID.' }
+      schema: { message: 'Nenhum usuário cadastrado com esse ID.' }
     }
   */
 
@@ -55,4 +55,4 @@ const swaggerDeleteVideoById = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerDeleteVideoById;
+export default swaggerDeleteUserById;

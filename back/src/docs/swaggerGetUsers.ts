@@ -1,14 +1,14 @@
-import { ControllerFunction } from '../../types';
+import { ControllerFunction } from '../types';
 
 /* eslint-disable arrow-body-style */
-const swaggerGetVideos = (controller: ControllerFunction) => {
+const swaggerGetUsers = (controller: ControllerFunction) => {
   // #swagger.start
 
   /*
-    #swagger.path = '/videos'
+    #swagger.path = '/users'
     #swagger.method = 'get'
-    #swagger.tags = ['Videos']
-    #swagger.description = 'Retornar um array de objetos com todos os vídeos cadastrados.'
+    #swagger.tags = ['Users']
+    #swagger.description = 'Retornar um array de objetos com todos os usuários cadastrados.'
   */
 
   /*
@@ -19,8 +19,8 @@ const swaggerGetVideos = (controller: ControllerFunction) => {
 
   /*
     #swagger.responses[200] = {
-      description: 'Vídeos retornados com sucesso.',
-      schema: [{ $ref: '#/definitions/Video' }]
+      description: 'Usuários encontrados com sucesso.',
+      schema: [{ $ref: '#/definitions/User' }]
     }
   */
 
@@ -41,7 +41,7 @@ const swaggerGetVideos = (controller: ControllerFunction) => {
   /*
     #swagger.responses[500] = {
       description: 'Internal Server Error.',
-      schema: { message: 'Erro interno ao tentar acessar todos os vídeos.' }
+      schema: { message: 'Erro interno ao tentar acessar todos os usuários.' }
     }
   */
 
@@ -49,4 +49,4 @@ const swaggerGetVideos = (controller: ControllerFunction) => {
   return controller;
 };
 
-export default swaggerGetVideos;
+export default swaggerGetUsers;

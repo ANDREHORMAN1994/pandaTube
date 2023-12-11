@@ -2,12 +2,12 @@ import { Router } from 'express';
 import middleware from '../middleware';
 import controllers from '../controllers';
 import upload from '../utils/multer';
-import swaggerCreateVideo from '../docs/videos/swaggerCreateVideo';
-import swaggerGetVideos from '../docs/videos/swaggerGetVideos';
-import swaggerDownloadVideo from '../docs/videos/swaggerDownloadVideo';
-import swaggerThumbVideo from '../docs/videos/swaggerThumbVideo';
-import swaggerUpdateVideoById from '../docs/videos/swaggerUpdateVideoById';
-import swaggerDeleteVideoById from '../docs/videos/swaggerDeleteVideoById';
+import swaggerCreateVideo from '../docs/swaggerCreateVideo';
+import swaggerGetVideos from '../docs/swaggerGetVideos';
+import swaggerDownloadVideo from '../docs/swaggerDownloadVideo';
+import swaggerThumbVideo from '../docs/swaggerThumbVideo';
+import swaggerUpdateVideoById from '../docs/swaggerUpdateVideoById';
+import swaggerDeleteVideoById from '../docs/swaggerDeleteVideoById';
 
 const videosRoutes = Router();
 
