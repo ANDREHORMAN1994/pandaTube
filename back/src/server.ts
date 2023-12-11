@@ -35,7 +35,7 @@ app.use(
   '/docs',
   swaggerUi.serve,
   swaggerUi.setup(swaggerFile, {
-    customCss: CDN_SWAGGER_UI,
+    customCssUrl: CDN_SWAGGER_UI,
   }),
 );
 app.use(allRoutes);
