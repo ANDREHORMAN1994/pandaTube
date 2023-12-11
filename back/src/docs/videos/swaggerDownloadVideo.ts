@@ -20,7 +20,7 @@ const swaggerDownloadVideo = (controller: ControllerFunction) => {
   /*
     #swagger.responses[200] = {
       description: 'Download concluído com sucesso',
-      schema: { message: 'Download concluído com sucesso' }]
+      schema: { message: 'Download concluído com sucesso' }
     }
   */
 
