@@ -3,7 +3,7 @@ import admin from 'firebase-admin';
 
 dotenv.config();
 
-const connect = () => {
+function connectToFireStore() {
   try {
     const firebaseApp: admin.app.App = (global as any).firebaseApp
       ?? admin.initializeApp({
@@ -20,6 +20,8 @@ const connect = () => {
   } finally {
     console.log('Connected to Firebase!');
   }
-};
+}
 
-export default connect;
+connectToFireStore();
+
+export default connectToFireStore;

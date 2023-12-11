@@ -5,7 +5,6 @@ import { StatusCodes } from 'http-status-codes';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import swaggerFile from '../swagger_output.json';
-import connect from './models/connect';
 import allRoutes from './routes';
 import html from './utils/initialHTML';
 import { ICustomError } from './types';
@@ -24,10 +23,7 @@ const app = express();
 
 app.use(cors(CORS_OPTIONS));
 app.use(express.json());
-
 app.use(express.static(path.join(__dirname, '..', 'public')));
-
-connect();
 
 app.get('/', (_req: Request, res: Response) => {
   /* #swagger.ignore = true */

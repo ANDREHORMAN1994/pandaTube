@@ -39,13 +39,13 @@ const DOC = {
   },
   definitions: {
     User: {
-      _id: 'abc123',
+      id: 'abc123',
       $name: 'André Horman',
       $email: 'andre@gmail.com',
       $password: '123456',
     },
     Video: {
-      _id: 'abc123',
+      id: 'abc123',
       $name: 'Top Gang 2',
       $categorie: 'comédia',
       $sinopse: 'Filme de comédia muito engraçado.',
