@@ -30,6 +30,10 @@ Para executar a aplicação, realize os passos a seguir:
 * Entre no diretório do projeto --> `cd pandaTube/front`.
 * Instale as dependências do projeto --> `npm install`.
 * Execute a aplicação --> `npm run dev`.
+* Abra outra aba do terminal entre novamente no diretório do projeto --> `cd pandaTube/front`.
+* Execute o app --> `npm run android`.
+
+> OBS: "Lembre-se de instalar o emulador do Android Studio ou o Expo Go no seu celular."
 
 
 ## :computer: Rotas da aplicação

@@ -53,11 +53,11 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
     const checkIfFileExists = async () => {
       const fileInfo = await FileSystem.getInfoAsync(
         FileSystem.documentDirectory + movie.ref
-      );
-      if (fileInfo.exists) {
-        setPathFile(fileInfo.uri);
-      } else if (movie.videoPlayerId) {
-        const videoUrl = requestVideoUrl(movie.videoPlayerId);
+        );
+        if (fileInfo.exists) {
+          setPathFile(fileInfo.uri);
+        } else if (movie.videoPlayerId) {
+        const videoUrl = requestVideoUrl(movie?.videoPlayerId);
         setPathFile(videoUrl);
       }
     };
