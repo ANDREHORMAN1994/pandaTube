@@ -12,7 +12,7 @@ import connectToFireStore from './models/connect';
 
 dotenv.config();
 
-// const CDN_SWAGGER_UI = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css';
+const CDN_SWAGGER_UI = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css';
 const PORT = process.env.PORT || 3001;
 const URL = process.env.BASE_URL || 'http://localhost:3001';
 const CORS_OPTIONS = {
@@ -34,7 +34,9 @@ app.get('/', (_req: Request, res: Response) => {
 app.use(
   '/docs',
   swaggerUi.serve,
-  swaggerUi.setup(swaggerFile, { explorer: true }),
+  swaggerUi.setup(swaggerFile, {
+    customCss: CDN_SWAGGER_UI,
+  }),
 );
 app.use(allRoutes);
 

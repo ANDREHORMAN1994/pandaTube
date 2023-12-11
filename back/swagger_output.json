@@ -35,6 +35,24 @@
     "application/json"
   ],
   "paths": {
+    "/history": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/user": {
       "post": {
         "tags": [
@@ -103,6 +121,9 @@
               }
             }
           },
+          "default": {
+            "description": ""
+          },
           "500-1": {
             "description": "Internal Server Error.",
             "schema": {
@@ -134,850 +155,6 @@
             }
           }
         }
-      }
-    },
-    "/video": {
-      "post": {
-        "tags": [
-          "Videos"
-        ],
-        "description": "Criar um novo vídeo com os dados fornecidos no corpo da requisição.",
-        "parameters": [
-          {
-            "name": "New Video",
-            "in": "body",
-            "description": "Informações para criar um novo vídeo.",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/NewVideoBody"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Vídeo criado com sucesso.",
-            "schema": {
-              "$ref": "#/definitions/Video"
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Campos inválidos ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Erro interno ao tentar criar um vídeo."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/users/{id}": {
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Deletar um usuário identificado pelo ID fornecido na rota.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Usuário deletado com sucesso."
-          },
-          "400": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "ID inválido ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Nenhum usuário cadastrado com esse ID."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      },
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Retornar um usuário com o ID especificado.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Usuário encontrado com sucesso.",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "ID inválido ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Erro interno ao tentar encontrar o usuário pelo id."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      },
-      "patch": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Retornar um usuário atualizado com o ID especificado.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "New Infos",
-            "in": "body",
-            "description": "Novas informações do usuário.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Fulano"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "fulano@gmail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "654321"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Usuário atualizado com sucesso.",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "404": {
-            "description": "Not Found.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Nenhum usuário cadastrado com esse ID."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "400-1": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "ID inválido ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "400-2": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Campos inválidos ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500-1": {
-            "description": "Internal Server Error.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Erro interno ao tentar atualizar o usuário."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500-2": {
-            "description": "Internal Server Error.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Erro ao tentar criar o hash da senha."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/video/{id}": {
-      "delete": {
-        "tags": [
-          "Videos"
-        ],
-        "description": "Deletar um vídeo identificado pelo ID fornecido na rota.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Vídeo deletado com sucesso."
-          },
-          "400": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "ID inválido ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Nenhum vídeo cadastrado com esse ID."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      },
-      "patch": {
-        "tags": [
-          "Videos"
-        ],
-        "description": "Retornar um vídeo atualizado com o ID especificado.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "New Video",
-            "in": "body",
-            "description": "Novas informações relacionadas ao vídeo.",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/NewVideoBody"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Vídeo atualizado com sucesso.",
-            "schema": {
-              "$ref": "#/definitions/Video"
-            }
-          },
-          "404": {
-            "description": "Not Found.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Nenhum vídeo cadastrado com esse ID."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "400-1": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "ID inválido ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "400-2": {
-            "description": "Bad Request.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Campos inválidos ou faltando."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/videos/download/{id}": {
-      "get": {
-        "tags": [
-          "Videos"
-        ],
-        "description": "Realiza o Download do vídeo com o id passado como parâmetro.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Download concluído com sucesso",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Download concluído com sucesso"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Erro interno ao tentar acessar todos os vídeos."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "description": "Retornar um array de objetos com todos os usuários cadastrados.",
-        "responses": {
-          "200": {
-            "description": "Usuários encontrados com sucesso.",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/User"
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Erro interno ao tentar acessar todos os usuários."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/videos": {
-      "get": {
-        "tags": [
-          "Videos"
-        ],
-        "description": "Retornar um array de objetos com todos os vídeos cadastrados.",
-        "responses": {
-          "200": {
-            "description": "Vídeos retornados com sucesso.",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Video"
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Erro interno ao tentar acessar todos os vídeos."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-1": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token não foi provido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "401-2": {
-            "description": "Unauthorized.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Token inválido."
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
       }
     },
     "/login": {
@@ -1083,8 +260,697 @@
                 "name": "main"
               }
             }
+          },
+          "default": {
+            "description": ""
           }
         }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Retornar um usuário com o ID especificado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "ID inválido ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno ao tentar encontrar o usuário pelo id."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Retornar um usuário atualizado com o ID especificado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "New Infos",
+            "in": "body",
+            "description": "Novas informações do usuário.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Fulano"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "fulano@gmail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "654321"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Nenhum usuário cadastrado com esse ID."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
+          },
+          "400-1": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "ID inválido ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400-2": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Campos inválidos ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500-1": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno ao tentar atualizar o usuário."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500-2": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro ao tentar criar o hash da senha."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Deletar um usuário identificado pelo ID fornecido na rota.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário deletado com sucesso."
+          },
+          "400": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "ID inválido ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Nenhum usuário cadastrado com esse ID."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Retornar um array de objetos com todos os usuários cadastrados.",
+        "responses": {
+          "200": {
+            "description": "Usuários encontrados com sucesso.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno ao tentar acessar todos os usuários."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/video": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Criar um novo vídeo com os dados fornecidos no corpo da requisição.",
+        "parameters": [
+          {
+            "name": "New Video",
+            "in": "body",
+            "description": "Informações para criar um novo vídeo.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewVideoBody"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Vídeo criado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Campos inválidos ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno ao tentar criar um vídeo."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/videos": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Retornar um array de objetos com todos os vídeos cadastrados.",
+        "responses": {
+          "200": {
+            "description": "Vídeos retornados com sucesso.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Video"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno ao tentar acessar todos os vídeos."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/videos/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/videos/download/{id}": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Realiza o Download do vídeo com o id passado como parâmetro.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Download concluído com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Download concluído com sucesso"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno ao tentar acessar todos os vídeos."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/videos/img/{name}": {
@@ -1122,6 +988,212 @@
                 "name": "main"
               }
             }
+          },
+          "default": {
+            "description": ""
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/video/{id}": {
+      "patch": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Retornar um vídeo atualizado com o ID especificado.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "New Video",
+            "in": "body",
+            "description": "Novas informações relacionadas ao vídeo.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewVideoBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vídeo atualizado com sucesso.",
+            "schema": {
+              "$ref": "#/definitions/Video"
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Nenhum vídeo cadastrado com esse ID."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
+          },
+          "400-1": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "ID inválido ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400-2": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Campos inválidos ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-1": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token não foi provido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401-2": {
+            "description": "Unauthorized.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Token inválido."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Deletar um vídeo identificado pelo ID fornecido na rota.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Vídeo deletado com sucesso."
+          },
+          "400": {
+            "description": "Bad Request.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "ID inválido ou faltando."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Nenhum vídeo cadastrado com esse ID."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "default": {
+            "description": ""
           },
           "401-1": {
             "description": "Unauthorized.",
