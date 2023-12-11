@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 import axios from 'axios';
+import { API_URL } from '@env';
 import { type IUser, type IMovie, type IError, type IHistorySection } from 'src/types';
 
-const BASE_EP = 'http://10.0.2.2:3001';
+const BASE_EP = API_URL ?? 'http://10.0.2.2:3001';
 
 export const login = async (infoUser: IUser): Promise<IUser | IError> => {
   const options = {

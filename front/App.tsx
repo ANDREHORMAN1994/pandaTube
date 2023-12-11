@@ -12,7 +12,6 @@ import THEME from './src/theme';
 
 function App() {
   const [fontLoading] = useFonts({ Roboto_400Regular, Roboto_700Bold });
-
   return (
     <NativeBaseProvider theme={THEME}>
       <StatusBar
