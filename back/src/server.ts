@@ -53,6 +53,6 @@ app.use(
 );
 
 app.listen(PORT, () => {
-  connectToFireStore();
   console.log(`Rodando na porta: ${PORT}\nAcesse: ${URL}/`);
+  connectToFireStore();
 });
