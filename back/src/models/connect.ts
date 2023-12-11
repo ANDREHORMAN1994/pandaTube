@@ -22,6 +22,4 @@ function connectToFireStore() {
   }
 }
 
-connectToFireStore();
-
 export default connectToFireStore;

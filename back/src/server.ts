@@ -8,6 +8,7 @@ import swaggerFile from '../swagger_output.json';
 import allRoutes from './routes';
 import html from './utils/initialHTML';
 import { ICustomError } from './types';
+import connectToFireStore from './models/connect';
 
 dotenv.config();
 
@@ -50,5 +51,6 @@ app.use(
 );
 
 app.listen(PORT, () => {
+  connectToFireStore();
   console.log(`Rodando na porta: ${PORT}\nAcesse: ${URL}/`);
 });

@@ -1166,7 +1166,7 @@
     "User": {
       "type": "object",
       "properties": {
-        "_id": {
+        "id": {
           "type": "string",
           "example": "abc123"
         },
@@ -1192,7 +1192,7 @@
     "Video": {
       "type": "object",
       "properties": {
-        "_id": {
+        "id": {
           "type": "string",
           "example": "abc123"
         },
