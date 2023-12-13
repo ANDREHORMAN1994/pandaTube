@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ScrollView, Text, VStack, useTheme, useToast } from 'native-base';
 import { Video, ResizeMode } from 'expo-av';
+import RNFS from 'react-native-fs';
 import * as FileSystem from 'expo-file-system';
 import { useNavigationState } from '@react-navigation/native';
 import DownloadSvg from '@assets/download.svg';
@@ -34,18 +35,41 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
 
   const requestVideoUrl = (path: string) => getVideoFile(path);
 
-  const downloadVideo = async (videoName: string) => {
-    const videoUrl = requestVideoUrl(movie.videoPlayerId ?? '');
+  const downloadVideoSystem = async (
+    videoUrl: string,
+    downloadDest: string
+  ) => {
+    const options = {
+      fromUrl: videoUrl,
+      toFile: downloadDest,
+      background: true,
+    };
 
-    const downloadObject = FileSystem.createDownloadResumable(
-      videoUrl,
-      FileSystem.documentDirectory + videoName
-    );
+    const download = RNFS.downloadFile(options);
+    const result = await download.promise;
+    return result;
+  };
 
-    const uri = await downloadObject.downloadAsync();
-    if (uri) {
-      showToast.current('Vídeo baixado com sucesso!');
-      setPathFile(uri?.uri);
+  const downloadVideoExpoFile = async (videoName: string) => {
+    try {
+      const videoUrl = requestVideoUrl(movie.videoPlayerId ?? '');
+      const downloadDest = `${RNFS.DownloadDirectoryPath}/${videoName}`;
+
+      const downloadObject = FileSystem.createDownloadResumable(
+        videoUrl,
+        FileSystem.documentDirectory + videoName
+      );
+
+      const uri = await downloadObject.downloadAsync();
+
+      if (uri) {
+        await downloadVideoSystem(videoUrl, downloadDest);
+        setPathFile(uri?.uri);
+        showToast.current('Vídeo baixado com sucesso!');
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
     }
   };
 
@@ -53,10 +77,10 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
     const checkIfFileExists = async () => {
       const fileInfo = await FileSystem.getInfoAsync(
         FileSystem.documentDirectory + movie.ref
-        );
-        if (fileInfo.exists) {
-          setPathFile(fileInfo.uri);
-        } else if (movie.videoPlayerId) {
+      );
+      if (fileInfo.exists) {
+        setPathFile(fileInfo.uri);
+      } else if (movie.videoPlayerId) {
         const videoUrl = requestVideoUrl(movie?.videoPlayerId);
         setPathFile(videoUrl);
       }
@@ -104,7 +128,7 @@ function VideoWeb({ movie, isVideoReady, setIsVideoReady }: Props) {
             <Button
               name="Baixar Vídeo"
               icon={<DownloadSvg />}
-              onPress={async () => downloadVideo(movie.ref)}
+              onPress={async () => downloadVideoExpoFile(movie.ref)}
             />
           </VStack>
         </ScrollView>
